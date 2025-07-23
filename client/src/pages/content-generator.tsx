@@ -169,7 +169,7 @@ export default function ContentGenerator() {
             <p className="text-green-800 font-medium">Real AI Content Generation Active</p>
           </div>
           <p className="text-green-600 text-sm mt-1">
-            OpenAI API is now connected and working! Generate authentic, AI-powered content for your business.
+            Clean OpenAI API key connected! Generate professional, platform-specific content with sentiment analysis.
           </p>
         </div>
 
