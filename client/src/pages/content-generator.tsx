@@ -78,31 +78,38 @@ export default function ContentGenerator() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
+  // Demo mode - generate sample content
+  const generateDemoContent = (data: typeof formData): GeneratedContent[] => {
+    const sampleContent = data.platforms.map((platform, index) => ({
+      id: Date.now() + index,
+      title: `${data.contentType} for ${platform}`,
+      body: `🚀 Transform your business with our innovative solutions! \n\nAt ${data.businessDescription || 'our company'}, we're passionate about delivering exceptional results that drive real growth. \n\n${data.topic ? `Learn more about ${data.topic} and how it can benefit your business.` : 'Discover how we can help you achieve your goals.'}\n\n#Innovation #Growth #Success`,
+      platform,
+      hashtags: ["Innovation", "Growth", "Success", "Business", "Transform"],
+      mentions: [],
+      sentiment: {
+        rating: 4.2,
+        confidence: 0.85,
+        insights: "Positive and engaging tone with strong call-to-action elements"
+      }
+    }));
+    return sampleContent;
+  };
+
   const generateMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
-      const response = await apiRequest("POST", "/api/content/generate", data);
-      return response.json();
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      return { content: generateDemoContent(data) };
     },
     onSuccess: (data) => {
       setGeneratedContent(data.content);
-      queryClient.invalidateQueries({ queryKey: ["/api/content/library"] });
       toast({
-        title: "Content Generated!",
-        description: `Successfully generated ${data.content.length} pieces of content.`,
+        title: "Content Generated! (Demo)",
+        description: `Generated ${data.content.length} demo posts. Connect OpenAI for real AI content.`,
       });
     },
     onError: (error) => {
-      if (isUnauthorizedError(error)) {
-        toast({
-          title: "Unauthorized",
-          description: "You are logged out. Logging in again...",
-          variant: "destructive",
-        });
-        setTimeout(() => {
-          window.location.href = "/api/login";
-        }, 500);
-        return;
-      }
       toast({
         title: "Error",
         description: "Failed to generate content. Please try again.",
@@ -153,6 +160,17 @@ export default function ContentGenerator() {
       <Sidebar />
       
       <main className="flex-1 ml-64 p-8">
+        {/* Demo Mode Banner */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+            <p className="text-blue-800 font-medium">Demo Mode</p>
+          </div>
+          <p className="text-blue-600 text-sm mt-1">
+            Content generation works with sample data. Connect your OpenAI API key for real AI-powered content.
+          </p>
+        </div>
+
         <header className="mb-8">
           <div className="flex items-center space-x-3 mb-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">

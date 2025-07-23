@@ -54,8 +54,64 @@ export default function ContentLibrary() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
+  // Demo data for content library
+  const demoContent: Content[] = [
+    {
+      id: 1,
+      title: "Summer Sale Announcement",
+      body: "🌞 Summer Sale is here! Get up to 50% off on all products. Limited time offer - shop now and save big! #SummerSale #Discount #Shopping",
+      contentType: "Promotional Content",
+      platforms: ["facebook", "instagram"],
+      tone: "Enthusiastic",
+      status: "published",
+      publishedAt: "2024-07-20T10:00:00Z",
+      metadata: {
+        hashtags: ["SummerSale", "Discount", "Shopping"],
+        mentions: [],
+        sentiment: { rating: 4.5, confidence: 0.9, insights: "Highly positive with strong call-to-action" }
+      },
+      createdAt: "2024-07-19T15:30:00Z"
+    },
+    {
+      id: 2,
+      title: "Behind the Scenes: Our Team",
+      body: "Meet the amazing people behind our success! 👥 Our dedicated team works tirelessly to bring you the best experience. #TeamWork #BehindTheScenes #Company",
+      contentType: "Behind the Scenes",
+      platforms: ["linkedin", "facebook"],
+      tone: "Professional",
+      status: "scheduled",
+      scheduledFor: "2024-07-25T14:00:00Z",
+      metadata: {
+        hashtags: ["TeamWork", "BehindTheScenes", "Company"],
+        mentions: [],
+        sentiment: { rating: 4.2, confidence: 0.85, insights: "Positive team-focused content" }
+      },
+      createdAt: "2024-07-22T09:15:00Z"
+    },
+    {
+      id: 3,
+      title: "Customer Success Story",
+      body: "🎉 Amazing results! Our client increased their sales by 200% using our platform. Read their full story and discover how we can help you too! #Success #Results #Growth",
+      contentType: "Customer Story",
+      platforms: ["twitter", "linkedin"],
+      tone: "Inspirational",
+      status: "draft",
+      metadata: {
+        hashtags: ["Success", "Results", "Growth"],
+        mentions: [],
+        sentiment: { rating: 4.7, confidence: 0.92, insights: "Very positive with strong social proof" }
+      },
+      createdAt: "2024-07-21T11:20:00Z"
+    }
+  ];
+
   const { data: content, isLoading } = useQuery<Content[]>({
     queryKey: ["/api/content/library"],
+    queryFn: async () => {
+      // Simulate loading delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      return demoContent;
+    },
     retry: false,
   });
 
@@ -168,6 +224,16 @@ export default function ContentLibrary() {
       <Sidebar />
       
       <main className="flex-1 ml-64 p-8">
+        {/* Demo Mode Banner */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+            <p className="text-blue-800 font-medium">Demo Mode</p>
+          </div>
+          <p className="text-blue-600 text-sm mt-1">
+            Showing sample content library. Your real generated content will appear here once connected.
+          </p>
+        </div>
         <header className="mb-8">
           <div className="flex justify-between items-start">
             <div>
