@@ -126,10 +126,10 @@ export default function PerformanceChart() {
 
   if (isLoading) {
     return (
-      <Card className="lg:col-span-2 shadow-sm border border-neutral-200">
+      <Card className="lg:col-span-2 card-professional">
         <CardHeader>
           <div className="flex justify-between items-center">
-            <CardTitle>Performance Overview</CardTitle>
+            <CardTitle className="text-foreground">Performance Overview</CardTitle>
             <Skeleton className="h-10 w-32" />
           </div>
         </CardHeader>
@@ -142,13 +142,13 @@ export default function PerformanceChart() {
 
   if (error || !performanceData) {
     return (
-      <Card className="lg:col-span-2 shadow-sm border border-neutral-200">
+      <Card className="lg:col-span-2 card-professional">
         <CardHeader>
-          <CardTitle>Performance Overview</CardTitle>
+          <CardTitle className="text-foreground">Performance Overview</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="h-80 flex items-center justify-center">
-            <p className="text-neutral-500">
+            <p className="text-muted-foreground">
               {error ? "Failed to load performance data" : "No performance data available"}
             </p>
           </div>
@@ -158,10 +158,10 @@ export default function PerformanceChart() {
   }
 
   return (
-    <Card className="lg:col-span-2 shadow-sm border border-neutral-200">
+    <Card className="lg:col-span-2 card-professional">
       <CardHeader>
         <div className="flex justify-between items-center">
-          <CardTitle className="text-lg font-semibold text-neutral-900">
+          <CardTitle className="text-lg font-semibold text-foreground">
             Performance Overview
           </CardTitle>
           <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>

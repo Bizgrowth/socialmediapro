@@ -61,17 +61,17 @@ export default function ScheduledPosts() {
 
   if (isLoading) {
     return (
-      <Card className="shadow-sm border border-neutral-200">
+      <Card className="card-professional">
         <CardHeader>
           <div className="flex justify-between items-center">
-            <CardTitle>Scheduled Posts</CardTitle>
+            <CardTitle className="text-foreground">Scheduled Posts</CardTitle>
             <Skeleton className="h-4 w-16" />
           </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {[...Array(2)].map((_, i) => (
-              <div key={i} className="flex items-start space-x-4 p-4 border border-neutral-200 rounded-lg">
+              <div key={i} className="flex items-start space-x-4 p-4 border border-border rounded-lg">
                 <Skeleton className="w-12 h-12 rounded-lg" />
                 <div className="flex-1">
                   <Skeleton className="h-4 w-full mb-2" />
@@ -88,10 +88,10 @@ export default function ScheduledPosts() {
   }
 
   return (
-    <Card className="shadow-sm border border-neutral-200">
+    <Card className="card-professional">
       <CardHeader>
         <div className="flex justify-between items-center">
-          <CardTitle className="text-lg font-semibold text-neutral-900">
+          <CardTitle className="text-lg font-semibold text-foreground">
             Scheduled Posts
           </CardTitle>
           <Link href="/calendar">
@@ -105,21 +105,21 @@ export default function ScheduledPosts() {
             posts.slice(0, 3).map((post) => (
               <div
                 key={post.id}
-                className="flex items-start space-x-4 p-4 border border-neutral-200 rounded-lg hover:bg-neutral-50 transition-colors"
+                className="flex items-start space-x-4 p-4 border border-border rounded-lg hover:bg-accent transition-colors"
               >
-                <div className="w-12 h-12 bg-neutral-200 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-muted rounded-lg flex items-center justify-center">
                   {post.platforms.length > 0 && getPlatformIcon(post.platforms[0])}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-neutral-900 truncate">
+                  <p className="text-sm font-medium text-foreground truncate">
                     {post.title}
                   </p>
-                  <p className="text-xs text-neutral-500 mt-1">
+                  <p className="text-xs text-muted-foreground mt-1">
                     {formatScheduledTime(post.scheduledFor)}
                   </p>
                   <div className="flex items-center space-x-1 mt-1">
                     {post.platforms.map((platform, index) => (
-                      <span key={index} className="text-xs text-neutral-400">
+                      <span key={index} className="text-xs text-muted-foreground">
                         {platform}
                         {index < post.platforms.length - 1 && " • "}
                       </span>
@@ -129,7 +129,7 @@ export default function ScheduledPosts() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="text-neutral-400 hover:text-neutral-600 p-2"
+                  className="text-muted-foreground hover:text-foreground p-2"
                   asChild
                 >
                   <Link href={`/content-library?edit=${post.id}`}>
@@ -140,11 +140,11 @@ export default function ScheduledPosts() {
             ))
           ) : (
             <div className="text-center py-8">
-              <Calendar className="h-12 w-12 text-neutral-300 mx-auto mb-4" />
-              <h3 className="text-sm font-medium text-neutral-900 mb-2">
+              <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-sm font-medium text-foreground mb-2">
                 No scheduled posts
               </h3>
-              <p className="text-sm text-neutral-500 mb-4">
+              <p className="text-sm text-muted-foreground mb-4">
                 Schedule your first post to start automating your social media presence.
               </p>
               <Link href="/content-generator">

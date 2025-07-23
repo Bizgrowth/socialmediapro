@@ -112,10 +112,10 @@ export default function StatsOverview() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       {statCards.map((stat, index) => (
-        <Card key={index} className="shadow-sm border border-neutral-200">
+        <Card key={index} className="card-professional">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className={`w-12 h-12 ${stat.bgColor} rounded-lg flex items-center justify-center`}>
+              <div className={`w-12 h-12 bg-muted rounded-lg flex items-center justify-center`}>
                 {stat.icon}
               </div>
               <Badge 
@@ -125,10 +125,10 @@ export default function StatsOverview() {
                 {formatGrowth(stat.growth)}
               </Badge>
             </div>
-            <h3 className="text-2xl font-bold text-neutral-900 mb-1">
+            <h3 className="text-2xl font-bold text-foreground mb-1">
               {stat.value}
             </h3>
-            <p className="text-sm text-neutral-600">{stat.title}</p>
+            <p className="text-sm text-muted-foreground">{stat.title}</p>
           </CardContent>
         </Card>
       ))}

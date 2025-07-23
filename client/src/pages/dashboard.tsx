@@ -85,22 +85,22 @@ export default function Dashboard() {
         </div>
 
         {/* Content Generator CTA Section */}
-        <div className="gradient-primary rounded-xl p-8 mb-8 text-primary-foreground">
+        <div className="gradient-primary rounded-xl p-8 mb-8 text-white">
           <div className="flex flex-col lg:flex-row items-center justify-between">
             <div className="lg:w-2/3 mb-6 lg:mb-0">
-              <h2 className="text-3xl font-bold mb-4 tracking-tight">AI-Powered Content Generation</h2>
-              <p className="text-primary-foreground/90 mb-6 text-lg leading-relaxed">
+              <h2 className="text-3xl font-bold mb-4 tracking-tight text-white">AI-Powered Content Generation</h2>
+              <p className="text-white/90 mb-6 text-lg leading-relaxed">
                 Create engaging, platform-specific content in seconds. Our AI understands your brand voice 
                 and target audience to generate posts that drive measurable results.
               </p>
               <div className="flex flex-wrap gap-3 mb-6">
-                <span className="bg-primary-foreground/20 px-4 py-2 rounded-full text-sm font-medium">
+                <span className="bg-white/20 px-4 py-2 rounded-full text-sm font-medium text-white">
                   ✨ One-click generation
                 </span>
-                <span className="bg-primary-foreground/20 px-4 py-2 rounded-full text-sm font-medium">
+                <span className="bg-white/20 px-4 py-2 rounded-full text-sm font-medium text-white">
                   🎯 Platform-specific
                 </span>
-                <span className="bg-primary-foreground/20 px-4 py-2 rounded-full text-sm font-medium">
+                <span className="bg-white/20 px-4 py-2 rounded-full text-sm font-medium text-white">
                   📈 Performance optimized
                 </span>
               </div>
@@ -108,7 +108,7 @@ export default function Dashboard() {
             <div className="lg:w-1/3 text-center">
               <button 
                 onClick={() => setContentGeneratorOpen(true)}
-                className="bg-primary-foreground text-primary px-8 py-4 rounded-lg font-semibold hover:bg-primary-foreground/90 transition-colors"
+                className="bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-white/90 transition-colors shadow-lg"
               >
                 <Sparkles className="h-5 w-5 mr-3" />
                 Try Content Generator
