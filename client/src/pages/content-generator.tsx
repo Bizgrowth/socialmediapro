@@ -98,21 +98,23 @@ export default function ContentGenerator() {
 
   const generateMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      return { content: generateDemoContent(data) };
+      const response = await apiRequest("POST", "/api/content/generate", data);
+      return response.json();
     },
     onSuccess: (data) => {
       setGeneratedContent(data.content);
       toast({
-        title: "Content Generated! (Demo)",
-        description: `Generated ${data.content.length} demo posts. Connect OpenAI for real AI content.`,
+        title: "Content Generated!",
+        description: `Generated ${data.content.length} AI-powered posts successfully.`,
       });
     },
     onError: (error) => {
+      // Fallback to demo content if AI fails
+      const fallbackContent = generateDemoContent(formData);
+      setGeneratedContent(fallbackContent);
       toast({
-        title: "Error",
-        description: "Failed to generate content. Please try again.",
+        title: "AI Generation Failed - Using Demo Content",
+        description: "OpenAI API key may need refresh. Showing sample content instead.",
         variant: "destructive",
       });
     },
@@ -160,14 +162,14 @@ export default function ContentGenerator() {
       <Sidebar />
       
       <main className="flex-1 ml-64 p-8">
-        {/* Demo Mode Banner */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        {/* API Key Issue Banner */}
+        <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-            <p className="text-blue-800 font-medium">Demo Mode</p>
+            <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
+            <p className="text-orange-800 font-medium">API Key Configuration Issue</p>
           </div>
-          <p className="text-blue-600 text-sm mt-1">
-            Content generation works with sample data. Connect your OpenAI API key for real AI-powered content.
+          <p className="text-orange-600 text-sm mt-1">
+            OpenAI API key appears to have an authentication issue. The content generator will attempt to connect, but may need a fresh API key.
           </p>
         </div>
 
