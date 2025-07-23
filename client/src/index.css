@@ -189,11 +189,35 @@
   box-shadow: 0 8px 25px 0 hsl(var(--primary) / 0.35);
 }
 
+.btn-primary:active,
+.btn-primary:focus-visible {
+  background-color: hsl(var(--primary) / 0.85);
+  box-shadow: 0 2px 8px 0 hsl(var(--primary) / 0.4);
+  transform: translateY(1px);
+}
+
+.btn-primary:focus {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
 .btn-secondary {
   @apply inline-flex items-center justify-center px-6 py-3 bg-secondary text-secondary-foreground 
          font-medium rounded-lg border border-border hover:bg-accent hover:text-accent-foreground 
          transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring 
          focus:ring-offset-2 focus:ring-offset-background;
+}
+
+.btn-secondary:active,
+.btn-secondary:focus-visible {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+  transform: translateY(1px);
+}
+
+.btn-secondary:focus {
+  background-color: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
 }
 
 .btn-ghost {
