@@ -49,25 +49,65 @@ export default function RoiTracking() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
+  // Demo data for ROI tracking
+  const demoRoiData: RoiData[] = [
+    {
+      id: 1,
+      campaign: "Summer Sale 2024",
+      platform: "facebook",
+      date: "2024-07-15T10:00:00Z",
+      spend: "2500",
+      revenue: "8200",
+      leads: 45,
+      conversions: 12
+    },
+    {
+      id: 2,
+      campaign: "Brand Awareness Q3",
+      platform: "instagram",
+      date: "2024-07-10T14:30:00Z",
+      spend: "1800",
+      revenue: "5400",
+      leads: 32,
+      conversions: 8
+    },
+    {
+      id: 3,
+      campaign: "Product Launch",
+      platform: "linkedin",
+      date: "2024-07-20T09:15:00Z",
+      spend: "3200",
+      revenue: "12600",
+      leads: 78,
+      conversions: 22
+    }
+  ];
+
   const { data: roiData, isLoading } = useQuery<RoiData[]>({
     queryKey: ["/api/roi"],
+    queryFn: async () => {
+      await new Promise(resolve => setTimeout(resolve, 900));
+      return demoRoiData;
+    },
     retry: false,
   });
 
   const addRoiMutation = useMutation({
     mutationFn: async (data: any) => {
-      const response = await apiRequest("POST", "/api/roi", {
-        ...data,
+      await new Promise(resolve => setTimeout(resolve, 1200));
+      const newData: RoiData = {
+        id: Date.now(),
+        campaign: data.campaign,
+        platform: data.platform,
         date: new Date().toISOString(),
-        spend: parseFloat(data.spend) || 0,
-        revenue: parseFloat(data.revenue) || 0,
+        spend: data.spend,
+        revenue: data.revenue,
         leads: parseInt(data.leads) || 0,
         conversions: parseInt(data.conversions) || 0,
-      });
-      return response.json();
+      };
+      return newData;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/roi"] });
       setAddDataOpen(false);
       setNewRoiData({
         campaign: "",
@@ -78,22 +118,11 @@ export default function RoiTracking() {
         conversions: "",
       });
       toast({
-        title: "ROI Data Added",
-        description: "Successfully added ROI tracking data.",
+        title: "ROI Data Added (Demo)",
+        description: "Demo ROI data added. Connect analytics tools for real tracking.",
       });
     },
     onError: (error) => {
-      if (isUnauthorizedError(error)) {
-        toast({
-          title: "Unauthorized",
-          description: "You are logged out. Logging in again...",
-          variant: "destructive",
-        });
-        setTimeout(() => {
-          window.location.href = "/api/login";
-        }, 500);
-        return;
-      }
       toast({
         title: "Error",
         description: "Failed to add ROI data. Please try again.",
@@ -179,6 +208,17 @@ export default function RoiTracking() {
       <Sidebar />
       
       <main className="flex-1 ml-64 p-8">
+        {/* Demo Mode Banner */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+            <p className="text-blue-800 font-medium">Demo Mode</p>
+          </div>
+          <p className="text-blue-600 text-sm mt-1">
+            Showing sample ROI data. Connect analytics tools for real campaign tracking.
+          </p>
+        </div>
+
         <header className="mb-8">
           <div className="flex justify-between items-start">
             <div>

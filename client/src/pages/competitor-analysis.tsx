@@ -60,23 +60,100 @@ export default function CompetitorAnalysis() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
+  // Demo data for competitors
+  const demoCompetitors: Competitor[] = [
+    {
+      id: 1,
+      name: "TechCorp Solutions",
+      platform: "instagram",
+      accountHandle: "@techcorp_solutions",
+      profileUrl: "https://instagram.com/techcorp_solutions",
+      isActive: true
+    },
+    {
+      id: 2,
+      name: "InnovateNow",
+      platform: "facebook",
+      accountHandle: "@innovatenow",
+      profileUrl: "https://facebook.com/innovatenow",
+      isActive: true
+    },
+    {
+      id: 3,
+      name: "Digital Pioneers",
+      platform: "linkedin",
+      accountHandle: "@digitalpioneers",
+      profileUrl: "https://linkedin.com/company/digitalpioneers",
+      isActive: true
+    }
+  ];
+
+  const demoAnalytics: CompetitorAnalytics[] = [
+    {
+      competitorId: 1,
+      followers: 45000,
+      following: 1200,
+      posts: 842,
+      engagementRate: 3.2,
+      avgLikes: 450,
+      avgComments: 28,
+      growth: 12.5
+    },
+    {
+      competitorId: 2,
+      followers: 78000,
+      following: 890,
+      posts: 1256,
+      engagementRate: 4.1,
+      avgLikes: 820,
+      avgComments: 45,
+      growth: -2.3
+    },
+    {
+      competitorId: 3,
+      followers: 23000,
+      following: 450,
+      posts: 385,
+      engagementRate: 2.8,
+      avgLikes: 180,
+      avgComments: 12,
+      growth: 8.7
+    }
+  ];
+
   const { data: competitors, isLoading: competitorsLoading } = useQuery<Competitor[]>({
     queryKey: ["/api/competitors"],
+    queryFn: async () => {
+      await new Promise(resolve => setTimeout(resolve, 800));
+      return demoCompetitors;
+    },
     retry: false,
   });
 
-  const { data: analytics, isLoading: analyticsLoading } = useQuery({
+  const { data: analytics, isLoading: analyticsLoading } = useQuery<CompetitorAnalytics[]>({
     queryKey: ["/api/competitors/analytics"],
+    queryFn: async () => {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      return demoAnalytics;
+    },
     retry: false,
   });
 
   const addCompetitorMutation = useMutation({
     mutationFn: async (data: typeof newCompetitor) => {
-      const response = await apiRequest("POST", "/api/competitors", data);
-      return response.json();
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      const newComp: Competitor = {
+        id: Date.now(),
+        name: data.name,
+        platform: data.platform,
+        accountHandle: data.accountHandle,
+        profileUrl: data.profileUrl,
+        isActive: true
+      };
+      return newComp;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/competitors"] });
       setAddCompetitorOpen(false);
       setNewCompetitor({
         name: "",
@@ -85,22 +162,11 @@ export default function CompetitorAnalysis() {
         profileUrl: "",
       });
       toast({
-        title: "Competitor Added",
-        description: "Successfully added competitor for tracking.",
+        title: "Competitor Added (Demo)",
+        description: "Demo competitor added. Connect social APIs for real tracking.",
       });
     },
     onError: (error) => {
-      if (isUnauthorizedError(error)) {
-        toast({
-          title: "Unauthorized",
-          description: "You are logged out. Logging in again...",
-          variant: "destructive",
-        });
-        setTimeout(() => {
-          window.location.href = "/api/login";
-        }, 500);
-        return;
-      }
       toast({
         title: "Error",
         description: "Failed to add competitor. Please try again.",
@@ -171,6 +237,17 @@ export default function CompetitorAnalysis() {
       <Sidebar />
       
       <main className="flex-1 ml-64 p-8">
+        {/* Demo Mode Banner */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+            <p className="text-blue-800 font-medium">Demo Mode</p>
+          </div>
+          <p className="text-blue-600 text-sm mt-1">
+            Showing sample competitor data. Connect social media APIs for real competitor tracking.
+          </p>
+        </div>
+
         <header className="mb-8">
           <div className="flex justify-between items-start">
             <div>
