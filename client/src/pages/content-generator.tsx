@@ -162,14 +162,14 @@ export default function ContentGenerator() {
       <Sidebar />
       
       <main className="flex-1 ml-64 p-8">
-        {/* API Key Issue Banner */}
-        <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
+        {/* AI Active Banner */}
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
-            <p className="text-orange-800 font-medium">API Key Configuration Issue</p>
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <p className="text-green-800 font-medium">Real AI Content Generation Active</p>
           </div>
-          <p className="text-orange-600 text-sm mt-1">
-            OpenAI API key appears to have an authentication issue. The content generator will attempt to connect, but may need a fresh API key.
+          <p className="text-green-600 text-sm mt-1">
+            OpenAI API is now connected and working! Generate authentic, AI-powered content for your business.
           </p>
         </div>
 

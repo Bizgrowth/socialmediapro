@@ -68,19 +68,77 @@ export async function registerRoutes(app: Express): Promise<Server> {
     topic: z.string().optional(),
   });
 
-  // Test endpoint to verify environment variables
+  // Test endpoint to verify OpenAI API with extracted key
   app.get('/api/test-openai', async (req: any, res) => {
-    res.json({ 
-      keyExists: !!process.env.OPENAI_API_KEY,
-      keyPreview: process.env.OPENAI_API_KEY ? `${process.env.OPENAI_API_KEY.substring(0, 20)}...` : 'NOT SET',
-      envTest: process.env.NODE_ENV || 'undefined'
-    });
+    try {
+      const extractFirstValidKey = (keyString: string | undefined): string => {
+        if (!keyString) return '';
+        const parts = keyString.split('sk-');
+        if (parts.length > 1) {
+          return 'sk-' + parts[1].split('sk-')[0];
+        }
+        return keyString;
+      };
+
+      const cleanKey = extractFirstValidKey(process.env.OPENAI_API_KEY);
+      
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${cleanKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'gpt-4o',
+          messages: [{ role: 'user', content: 'Say "API test successful"' }],
+          max_tokens: 10
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        res.json({ 
+          success: true,
+          message: data.choices[0].message.content,
+          keyUsed: `${cleanKey.substring(0, 15)}...`,
+          keyWorking: true
+        });
+      } else {
+        const errorData = await response.json();
+        res.status(response.status).json({ 
+          success: false,
+          error: errorData.error?.message || 'Unknown error',
+          keyUsed: `${cleanKey.substring(0, 15)}...`,
+          keyWorking: false
+        });
+      }
+    } catch (error: any) {
+      res.status(500).json({ 
+        success: false,
+        error: error.message,
+        keyWorking: false
+      });
+    }
   });
 
   app.post('/api/content/generate', async (req: any, res) => {
     try {
       // TEST MODE: Using test user ID instead of authentication
       const userId = "test-user-123";
+      
+      // Create test user if doesn't exist
+      try {
+        await storage.getUser(userId);
+      } catch {
+        await storage.upsertUser({
+          id: userId,
+          email: 'demo@example.com',
+          firstName: 'Demo',
+          lastName: 'User',
+          profileImageUrl: null
+        });
+      }
+      
       const validatedData = contentGenerationSchema.parse(req.body);
       
       const generatedContent = await generateAndSaveContent({

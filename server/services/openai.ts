@@ -1,8 +1,20 @@
 import OpenAI from "openai";
 
 // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+// Extract the first valid API key from potentially concatenated keys
+const extractFirstValidKey = (keyString: string | undefined): string => {
+  if (!keyString) return '';
+  
+  // Split by 'sk-' and find the first complete key
+  const parts = keyString.split('sk-');
+  if (parts.length > 1) {
+    return 'sk-' + parts[1].split('sk-')[0]; // Get first key only
+  }
+  return keyString;
+};
+
 const openai = new OpenAI({ 
-  apiKey: process.env.OPENAI_API_KEY
+  apiKey: extractFirstValidKey(process.env.OPENAI_API_KEY)
 });
 
 export interface ContentGenerationParams {
