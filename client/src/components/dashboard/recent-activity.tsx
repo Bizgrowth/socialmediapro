@@ -77,9 +77,9 @@ export default function RecentActivity() {
 
   if (isLoading) {
     return (
-      <Card className="shadow-sm border border-neutral-200">
+      <Card className="card-professional">
         <CardHeader>
-          <CardTitle>Recent Activity</CardTitle>
+          <CardTitle className="text-foreground">Recent Activity</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -123,9 +123,9 @@ export default function RecentActivity() {
   const displayActivities = activities && activities.length > 0 ? activities : emptyStateActivities;
 
   return (
-    <Card className="shadow-sm border border-neutral-200">
+    <Card className="card-professional">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold text-neutral-900">Recent Activity</CardTitle>
+        <CardTitle className="text-lg font-semibold text-foreground">Recent Activity</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
@@ -133,8 +133,8 @@ export default function RecentActivity() {
             <div key={activity.id} className="flex items-center space-x-3">
               <div className={`w-2 h-2 ${getActivityColor(activity.type)} rounded-full`}></div>
               <div className="flex-1">
-                <p className="text-sm text-neutral-800">{activity.description}</p>
-                <p className="text-xs text-neutral-500">{formatTimeAgo(activity.timestamp)}</p>
+                <p className="text-sm text-foreground font-medium">{activity.description}</p>
+                <p className="text-xs text-muted-foreground">{formatTimeAgo(activity.timestamp)}</p>
               </div>
               {activity.platform && (
                 <Badge variant="outline" className="text-xs">
@@ -146,8 +146,8 @@ export default function RecentActivity() {
           
           {(!activities || activities.length === 0) && (
             <div className="text-center py-4">
-              <TrendingUp className="h-8 w-8 text-neutral-300 mx-auto mb-2" />
-              <p className="text-sm text-neutral-500">
+              <TrendingUp className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+              <p className="text-sm text-muted-foreground">
                 Your activity will appear here as you use the platform
               </p>
             </div>
