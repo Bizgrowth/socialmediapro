@@ -30,6 +30,16 @@ export default function Dashboard() {
       <Sidebar />
       
       <main className="flex-1 ml-64 p-8">
+        {/* Demo Mode Banner */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+            <p className="text-blue-800 font-medium">Demo Mode</p>
+          </div>
+          <p className="text-blue-600 text-sm mt-1">
+            You're viewing the platform with sample data. All features are functional - perfect for exploring the interface!
+          </p>
+        </div>
         {/* Header */}
         <header className="mb-8">
           <div className="flex justify-between items-start">

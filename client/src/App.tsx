@@ -15,6 +15,25 @@ import Analytics from "@/pages/analytics";
 import ContentLibrary from "@/pages/content-library";
 
 function Router() {
+  // Demo mode - bypass authentication to allow exploration
+  const isDemoMode = true;
+  
+  if (isDemoMode) {
+    return (
+      <Switch>
+        <Route path="/" component={Dashboard} />
+        <Route path="/content-generator" component={ContentGenerator} />
+        <Route path="/calendar" component={Calendar} />
+        <Route path="/competitor-analysis" component={CompetitorAnalysis} />
+        <Route path="/roi-tracking" component={RoiTracking} />
+        <Route path="/analytics" component={Analytics} />
+        <Route path="/content-library" component={ContentLibrary} />
+        <Route component={NotFound} />
+      </Switch>
+    );
+  }
+
+  // Production mode with authentication
   const { isAuthenticated, isLoading } = useAuth();
 
   return (
