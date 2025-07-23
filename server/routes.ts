@@ -68,24 +68,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     topic: z.string().optional(),
   });
 
-  // Test endpoint to verify OpenAI API with extracted key
+  // Test endpoint to verify OpenAI API
   app.get('/api/test-openai', async (req: any, res) => {
     try {
-      const extractFirstValidKey = (keyString: string | undefined): string => {
-        if (!keyString) return '';
-        const parts = keyString.split('sk-');
-        if (parts.length > 1) {
-          return 'sk-' + parts[1].split('sk-')[0];
-        }
-        return keyString;
-      };
-
-      const cleanKey = extractFirstValidKey(process.env.OPENAI_API_KEY);
-      
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${cleanKey}`,
+          'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -100,7 +89,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         res.json({ 
           success: true,
           message: data.choices[0].message.content,
-          keyUsed: `${cleanKey.substring(0, 15)}...`,
           keyWorking: true
         });
       } else {
@@ -108,7 +96,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         res.status(response.status).json({ 
           success: false,
           error: errorData.error?.message || 'Unknown error',
-          keyUsed: `${cleanKey.substring(0, 15)}...`,
           keyWorking: false
         });
       }
