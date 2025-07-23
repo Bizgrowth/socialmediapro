@@ -26,43 +26,47 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen flex bg-neutral-50">
+    <div className="min-h-screen flex gradient-bg">
       <Sidebar />
       
       <main className="flex-1 ml-64 p-8">
-        {/* Real Data Active Banner */}
-        <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-          <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <p className="text-green-800 font-medium">Real AI Platform Active</p>
+        {/* AI Platform Status Banner */}
+        <div className="glass-panel rounded-xl p-6 mb-8">
+          <div className="flex items-center space-x-3 mb-2">
+            <div className="status-dot status-active"></div>
+            <h3 className="text-foreground font-semibold text-lg">AI Platform Active</h3>
           </div>
-          <p className="text-green-600 text-sm mt-1">
-            Your platform is now connected to OpenAI for real content generation. Try the Content Generator to create authentic posts!
+          <p className="text-muted-foreground">
+            Connected to OpenAI for professional content generation. Create platform-optimized posts instantly.
           </p>
         </div>
+        
         {/* Header */}
-        <header className="mb-8">
+        <header className="mb-10">
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-3xl font-bold text-neutral-900 mb-2">Dashboard</h1>
-              <p className="text-neutral-600">Track your social media performance and grow your business</p>
+              <h1 className="text-4xl font-bold text-foreground mb-3 tracking-tight">
+                Social Media Dashboard
+              </h1>
+              <p className="text-muted-foreground text-lg">
+                Monitor performance, analyze engagement, and accelerate business growth
+              </p>
             </div>
             <div className="flex space-x-4">
-              <Button 
-                variant="outline" 
+              <button 
                 onClick={handleExportReport}
-                className="flex items-center space-x-2"
+                className="btn-secondary"
               >
-                <Download className="h-4 w-4" />
-                <span>Export Report</span>
-              </Button>
-              <Button 
+                <Download className="h-5 w-5 mr-2" />
+                Export Report
+              </button>
+              <button 
                 onClick={() => setContentGeneratorOpen(true)}
-                className="bg-primary text-white hover:bg-primary/90 flex items-center space-x-2"
+                className="btn-primary"
               >
-                <Sparkles className="h-4 w-4" />
-                <span>Generate Content</span>
-              </Button>
+                <Sparkles className="h-5 w-5 mr-2" />
+                Generate Content
+              </button>
             </div>
           </div>
         </header>
@@ -81,32 +85,37 @@ export default function Dashboard() {
         </div>
 
         {/* Content Generator CTA Section */}
-        <Card className="bg-gradient-to-r from-primary to-blue-600 text-white mb-8">
-          <CardContent className="p-8">
-            <div className="flex flex-col lg:flex-row items-center justify-between">
-              <div className="lg:w-2/3 mb-6 lg:mb-0">
-                <h2 className="text-2xl font-bold mb-3">AI-Powered Content Generation</h2>
-                <p className="text-blue-100 mb-4">
-                  Create engaging, platform-specific content in seconds. Our AI understands your brand voice and target audience to generate posts that drive results.
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="bg-white/20 px-3 py-1 rounded-full text-sm">✨ One-click generation</span>
-                  <span className="bg-white/20 px-3 py-1 rounded-full text-sm">🎯 Platform-specific</span>
-                  <span className="bg-white/20 px-3 py-1 rounded-full text-sm">📈 Performance optimized</span>
-                </div>
-              </div>
-              <div className="lg:w-1/3 text-center">
-                <Button 
-                  onClick={() => setContentGeneratorOpen(true)}
-                  className="bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-neutral-50 transition-colors"
-                >
-                  <Sparkles className="h-5 w-5 mr-3" />
-                  Try Content Generator
-                </Button>
+        <div className="gradient-primary rounded-xl p-8 mb-8 text-primary-foreground">
+          <div className="flex flex-col lg:flex-row items-center justify-between">
+            <div className="lg:w-2/3 mb-6 lg:mb-0">
+              <h2 className="text-3xl font-bold mb-4 tracking-tight">AI-Powered Content Generation</h2>
+              <p className="text-primary-foreground/90 mb-6 text-lg leading-relaxed">
+                Create engaging, platform-specific content in seconds. Our AI understands your brand voice 
+                and target audience to generate posts that drive measurable results.
+              </p>
+              <div className="flex flex-wrap gap-3 mb-6">
+                <span className="bg-primary-foreground/20 px-4 py-2 rounded-full text-sm font-medium">
+                  ✨ One-click generation
+                </span>
+                <span className="bg-primary-foreground/20 px-4 py-2 rounded-full text-sm font-medium">
+                  🎯 Platform-specific
+                </span>
+                <span className="bg-primary-foreground/20 px-4 py-2 rounded-full text-sm font-medium">
+                  📈 Performance optimized
+                </span>
               </div>
             </div>
-          </CardContent>
-        </Card>
+            <div className="lg:w-1/3 text-center">
+              <button 
+                onClick={() => setContentGeneratorOpen(true)}
+                className="bg-primary-foreground text-primary px-8 py-4 rounded-lg font-semibold hover:bg-primary-foreground/90 transition-colors"
+              >
+                <Sparkles className="h-5 w-5 mr-3" />
+                Try Content Generator
+              </button>
+            </div>
+          </div>
+        </div>
 
         {/* Bottom Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

@@ -39,19 +39,22 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-64 bg-white shadow-lg flex flex-col fixed h-full z-10">
+    <aside className="w-64 bg-card border-r border-border flex flex-col fixed h-full z-10 shadow-elevated">
       {/* Logo */}
-      <div className="p-6 border-b border-neutral-200">
+      <div className="p-6 border-b border-border">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-            <Rocket className="h-5 w-5 text-white" />
+          <div className="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center shadow-glow">
+            <Rocket className="h-6 w-6 text-primary-foreground" />
           </div>
-          <span className="text-xl font-bold text-neutral-800">SocialBoost Pro</span>
+          <div>
+            <span className="text-xl font-bold text-foreground tracking-tight">SocialBoost</span>
+            <div className="text-xs text-primary font-semibold">PRO</div>
+          </div>
         </div>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-2">
+      <nav className="flex-1 p-6 space-y-2">
         {navigation.map((item) => {
           const Icon = item.icon;
           const isActive = location === item.href;
@@ -60,14 +63,20 @@ export default function Sidebar() {
             <Link key={item.name} href={item.href}>
               <a
                 className={cn(
-                  "flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors font-medium",
+                  "flex items-center space-x-4 px-4 py-3 rounded-xl transition-all duration-200 font-medium group",
                   isActive
-                    ? "bg-primary text-white"
-                    : "text-neutral-600 hover:bg-neutral-100"
+                    ? "bg-primary text-primary-foreground shadow-lg"
+                    : "text-muted-foreground hover:text-foreground hover:bg-accent"
                 )}
               >
-                <Icon className="h-5 w-5" />
+                <Icon className={cn(
+                  "h-5 w-5 transition-transform duration-200",
+                  isActive ? "scale-110" : "group-hover:scale-105"
+                )} />
                 <span>{item.name}</span>
+                {isActive && (
+                  <div className="w-2 h-2 bg-primary-foreground rounded-full ml-auto"></div>
+                )}
               </a>
             </Link>
           );
@@ -75,25 +84,25 @@ export default function Sidebar() {
       </nav>
 
       {/* User Profile */}
-      <div className="p-4 border-t border-neutral-200">
-        <div className="flex items-center space-x-3 px-4 py-3">
-          <Avatar className="h-10 w-10">
+      <div className="p-6 border-t border-border">
+        <div className="flex items-center space-x-3 px-4 py-3 rounded-xl glass-panel">
+          <Avatar className="h-12 w-12 ring-2 ring-primary/20">
             <AvatarImage src={user?.profileImageUrl || ""} alt="Profile" />
-            <AvatarFallback className="bg-primary text-white">
+            <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
               {getUserInitials(user)}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-neutral-800 truncate">
+            <p className="text-sm font-semibold text-foreground truncate">
               {user?.firstName && user?.lastName 
                 ? `${user.firstName} ${user.lastName}`
                 : user?.email || "User"
               }
             </p>
-            <p className="text-xs text-neutral-500">Pro Plan</p>
+            <p className="text-xs text-primary font-medium">Professional Plan</p>
           </div>
           <Link href="/settings">
-            <a className="text-neutral-400 hover:text-neutral-600">
+            <a className="text-muted-foreground hover:text-foreground p-2 rounded-lg hover:bg-accent transition-colors">
               <Settings className="h-5 w-5" />
             </a>
           </Link>

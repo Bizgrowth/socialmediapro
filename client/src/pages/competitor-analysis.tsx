@@ -233,18 +233,18 @@ export default function CompetitorAnalysis() {
   }
 
   return (
-    <div className="min-h-screen flex bg-neutral-50">
+    <div className="min-h-screen flex gradient-bg">
       <Sidebar />
       
       <main className="flex-1 ml-64 p-8">
-        {/* Platform Ready Banner */}
-        <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-          <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <p className="text-green-800 font-medium">Platform Ready for Integration</p>
+        {/* Integration Ready Banner */}
+        <div className="glass-panel rounded-xl p-6 mb-8">
+          <div className="flex items-center space-x-3 mb-2">
+            <div className="status-dot status-warning"></div>
+            <h3 className="text-foreground font-semibold text-lg">Ready for Social Integration</h3>
           </div>
-          <p className="text-green-600 text-sm mt-1">
-            Ready to connect social media APIs for real competitor tracking. Sample data shown until integration.  
+          <p className="text-muted-foreground">
+            Connect social media APIs to enable real-time competitor tracking and analytics.
           </p>
         </div>
 
