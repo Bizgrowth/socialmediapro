@@ -30,14 +30,14 @@ export default function Dashboard() {
       <Sidebar />
       
       <main className="flex-1 ml-64 p-8">
-        {/* Demo Mode Banner */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        {/* Real Data Active Banner */}
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-            <p className="text-blue-800 font-medium">Demo Mode</p>
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <p className="text-green-800 font-medium">Real AI Platform Active</p>
           </div>
-          <p className="text-blue-600 text-sm mt-1">
-            You're viewing the platform with sample data. All features are functional - perfect for exploring the interface!
+          <p className="text-green-600 text-sm mt-1">
+            Your platform is now connected to OpenAI for real content generation. Try the Content Generator to create authentic posts!
           </p>
         </div>
         {/* Header */}

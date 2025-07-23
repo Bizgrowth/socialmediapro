@@ -224,14 +224,14 @@ export default function ContentLibrary() {
       <Sidebar />
       
       <main className="flex-1 ml-64 p-8">
-        {/* Demo Mode Banner */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        {/* Real Content Library Banner */}
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-            <p className="text-blue-800 font-medium">Demo Mode</p>
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <p className="text-green-800 font-medium">Real Content Library Active</p>
           </div>
-          <p className="text-blue-600 text-sm mt-1">
-            Showing sample content library. Your real generated content will appear here once connected.
+          <p className="text-green-600 text-sm mt-1">
+            Your AI-generated content is saved here. Visit Content Generator to create new posts with real AI.
           </p>
         </div>
         <header className="mb-8">
