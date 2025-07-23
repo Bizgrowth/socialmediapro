@@ -126,7 +126,7 @@ export default function PerformanceChart() {
 
   if (isLoading) {
     return (
-      <Card className="lg:col-span-2 card-professional">
+      <Card className="lg:col-span-2 card-primary">
         <CardHeader>
           <div className="flex justify-between items-center">
             <CardTitle className="text-foreground">Performance Overview</CardTitle>
@@ -142,7 +142,7 @@ export default function PerformanceChart() {
 
   if (error || !performanceData) {
     return (
-      <Card className="lg:col-span-2 card-professional">
+      <Card className="lg:col-span-2 card-primary">
         <CardHeader>
           <CardTitle className="text-foreground">Performance Overview</CardTitle>
         </CardHeader>
@@ -158,7 +158,7 @@ export default function PerformanceChart() {
   }
 
   return (
-    <Card className="lg:col-span-2 card-professional">
+    <Card className="lg:col-span-2 card-primary">
       <CardHeader>
         <div className="flex justify-between items-center">
           <CardTitle className="text-lg font-semibold text-foreground">

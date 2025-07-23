@@ -281,6 +281,67 @@
   box-shadow: 0 0 20px 0 hsl(var(--primary) / 0.1);
 }
 
+/* Professional card color variants */
+.card-primary {
+  @apply bg-card text-card-foreground rounded-xl border shadow-card transition-all duration-300;
+  background: linear-gradient(145deg, 
+    hsl(var(--card)) 0%, 
+    hsl(215, 100%, 98%) 30%,
+    hsl(var(--card)) 100%);
+  border-color: hsl(215, 40%, 80%);
+}
+
+.card-primary:hover {
+  box-shadow: 0 8px 25px -5px hsl(215, 60%, 50% / 0.15);
+  border-color: hsl(215, 60%, 70%);
+  transform: translateY(-2px);
+}
+
+.card-success {
+  @apply bg-card text-card-foreground rounded-xl border shadow-card transition-all duration-300;
+  background: linear-gradient(145deg, 
+    hsl(var(--card)) 0%, 
+    hsl(142, 100%, 98%) 30%,
+    hsl(var(--card)) 100%);
+  border-color: hsl(142, 40%, 80%);
+}
+
+.card-success:hover {
+  box-shadow: 0 8px 25px -5px hsl(142, 60%, 50% / 0.15);
+  border-color: hsl(142, 60%, 70%);
+  transform: translateY(-2px);
+}
+
+.card-warning {
+  @apply bg-card text-card-foreground rounded-xl border shadow-card transition-all duration-300;
+  background: linear-gradient(145deg, 
+    hsl(var(--card)) 0%, 
+    hsl(38, 100%, 98%) 30%,
+    hsl(var(--card)) 100%);
+  border-color: hsl(38, 40%, 80%);
+}
+
+.card-warning:hover {
+  box-shadow: 0 8px 25px -5px hsl(38, 60%, 50% / 0.15);
+  border-color: hsl(38, 60%, 70%);
+  transform: translateY(-2px);
+}
+
+.card-info {
+  @apply bg-card text-card-foreground rounded-xl border shadow-card transition-all duration-300;
+  background: linear-gradient(145deg, 
+    hsl(var(--card)) 0%, 
+    hsl(199, 100%, 98%) 30%,
+    hsl(var(--card)) 100%);
+  border-color: hsl(199, 40%, 80%);
+}
+
+.card-info:hover {
+  box-shadow: 0 8px 25px -5px hsl(199, 60%, 50% / 0.15);
+  border-color: hsl(199, 60%, 70%);
+  transform: translateY(-2px);
+}
+
 /* Status indicators */
 .status-dot {
   @apply w-2 h-2 rounded-full;

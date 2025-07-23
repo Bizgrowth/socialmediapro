@@ -28,7 +28,7 @@ export default function CompetitorInsights() {
 
   if (isLoading) {
     return (
-      <Card className="card-professional">
+      <Card className="card-warning">
         <CardHeader>
           <div className="flex justify-between items-center">
             <CardTitle className="text-foreground">Competitor Insights</CardTitle>
@@ -61,7 +61,7 @@ export default function CompetitorInsights() {
   const hasCompetitors = competitors && competitors.length > 0;
 
   return (
-    <Card className="card-professional">
+    <Card className="card-warning">
       <CardHeader>
         <div className="flex justify-between items-center">
           <CardTitle className="text-lg font-semibold text-foreground">

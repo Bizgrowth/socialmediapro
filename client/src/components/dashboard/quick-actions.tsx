@@ -9,7 +9,7 @@ interface QuickActionsProps {
 
 export default function QuickActions({ onOpenContentGenerator }: QuickActionsProps) {
   return (
-    <Card className="card-professional">
+    <Card className="card-success">
       <CardHeader>
         <CardTitle className="text-lg font-semibold text-foreground">
           Quick Actions

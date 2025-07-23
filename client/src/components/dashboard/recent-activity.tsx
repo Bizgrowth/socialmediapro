@@ -77,7 +77,7 @@ export default function RecentActivity() {
 
   if (isLoading) {
     return (
-      <Card className="card-professional">
+      <Card className="card-success">
         <CardHeader>
           <CardTitle className="text-foreground">Recent Activity</CardTitle>
         </CardHeader>
@@ -123,7 +123,7 @@ export default function RecentActivity() {
   const displayActivities = activities && activities.length > 0 ? activities : emptyStateActivities;
 
   return (
-    <Card className="card-professional">
+    <Card className="card-success">
       <CardHeader>
         <CardTitle className="text-lg font-semibold text-foreground">Recent Activity</CardTitle>
       </CardHeader>

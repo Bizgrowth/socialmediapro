@@ -61,7 +61,7 @@ export default function ScheduledPosts() {
 
   if (isLoading) {
     return (
-      <Card className="card-professional">
+      <Card className="card-info">
         <CardHeader>
           <div className="flex justify-between items-center">
             <CardTitle className="text-foreground">Scheduled Posts</CardTitle>
@@ -88,7 +88,7 @@ export default function ScheduledPosts() {
   }
 
   return (
-    <Card className="card-professional">
+    <Card className="card-info">
       <CardHeader>
         <div className="flex justify-between items-center">
           <CardTitle className="text-lg font-semibold text-foreground">

@@ -112,7 +112,7 @@ export default function StatsOverview() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       {statCards.map((stat, index) => (
-        <Card key={index} className="card-professional">
+        <Card key={index} className={index === 0 ? "card-primary" : index === 1 ? "card-success" : index === 2 ? "card-warning" : "card-info"}>
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
               <div className={`w-12 h-12 bg-muted rounded-lg flex items-center justify-center`}>
