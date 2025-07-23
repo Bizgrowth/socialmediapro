@@ -140,7 +140,7 @@ export default function CompetitorInsights() {
                 Add competitors to track their performance and get insights for your strategy.
               </p>
               <Link href="/competitor-analysis">
-                <Button size="sm">
+                <Button size="sm" className="btn-warning">
                   <Plus className="h-4 w-4 mr-2" />
                   Add Competitors
                 </Button>

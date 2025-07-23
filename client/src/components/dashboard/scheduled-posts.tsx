@@ -148,7 +148,7 @@ export default function ScheduledPosts() {
                 Schedule your first post to start automating your social media presence.
               </p>
               <Link href="/content-generator">
-                <Button size="sm">
+                <Button size="sm" className="btn-info">
                   <Calendar className="h-4 w-4 mr-2" />
                   Schedule a Post
                 </Button>

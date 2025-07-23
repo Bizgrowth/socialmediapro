@@ -108,7 +108,7 @@ export default function Dashboard() {
             <div className="lg:w-1/3 text-center">
               <button 
                 onClick={() => setContentGeneratorOpen(true)}
-                className="bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-white/90 transition-colors shadow-lg"
+                className="bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-white/90 transition-all duration-200 shadow-xl hover:shadow-2xl hover:scale-105"
               >
                 <Sparkles className="h-5 w-5 mr-3" />
                 Try Content Generator
