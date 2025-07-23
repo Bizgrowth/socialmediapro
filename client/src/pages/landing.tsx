@@ -62,7 +62,7 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-lg">
                 <Rocket className="h-5 w-5 text-white" />
               </div>
               <span className="text-xl font-bold text-neutral-800">SocialBoost Pro</span>
@@ -197,7 +197,7 @@ export default function Landing() {
       <footer className="bg-neutral-900 text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex items-center justify-center space-x-3 mb-4">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-lg">
               <Rocket className="h-5 w-5 text-white" />
             </div>
             <span className="text-xl font-bold">SocialBoost Pro</span>

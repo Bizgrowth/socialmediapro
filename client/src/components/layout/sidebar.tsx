@@ -43,12 +43,12 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="p-6 border-b border-border">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center shadow-glow">
-            <Rocket className="h-6 w-6 text-primary-foreground" />
+          <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-xl border-2 border-primary/20">
+            <Rocket className="h-6 w-6 text-primary" />
           </div>
           <div>
-            <span className="text-xl font-bold text-foreground tracking-tight">SocialBoost</span>
-            <div className="text-xs text-primary font-semibold">PRO</div>
+            <span className="text-xl font-bold text-white tracking-tight">SocialBoost</span>
+            <div className="text-xs text-primary-foreground font-semibold bg-primary px-2 py-0.5 rounded-md">PRO</div>
           </div>
         </div>
       </div>
