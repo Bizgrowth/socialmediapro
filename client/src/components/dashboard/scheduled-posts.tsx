@@ -94,8 +94,8 @@ export default function ScheduledPosts() {
           <CardTitle className="text-lg font-semibold text-foreground">
             Scheduled Posts
           </CardTitle>
-          <Link href="/calendar">
-            <a className="text-primary text-sm hover:underline">View all</a>
+          <Link href="/calendar" className="text-primary text-sm hover:underline">
+            View all
           </Link>
         </div>
       </CardHeader>
