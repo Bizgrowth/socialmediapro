@@ -226,9 +226,9 @@ export default function RoiTracking() {
                 <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
                   <DollarSign className="h-5 w-5 text-white" />
                 </div>
-                <h1 className="text-3xl font-bold text-neutral-900">ROI Tracking</h1>
+                <h1 className="text-3xl font-bold text-white">ROI Tracking</h1>
               </div>
-              <p className="text-neutral-600">Track your social media return on investment and campaign performance</p>
+              <p className="text-neutral-300">Track your social media return on investment and campaign performance</p>
             </div>
             <Dialog open={addDataOpen} onOpenChange={setAddDataOpen}>
               <DialogTrigger asChild>
