@@ -150,16 +150,12 @@
   animation: fade-in 0.3s ease-out;
 }
 
-/* Custom textured background with overlay */
+/* Dark solid background */
 .gradient-bg {
-  background: 
-    linear-gradient(135deg, rgba(13, 62, 94, 0.85) 0%, rgba(10, 60, 100, 0.9) 100%),
-    url('/image_1753317077102.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-blend-mode: multiply;
+  background: linear-gradient(135deg, 
+    hsl(210, 30%, 15%) 0%, 
+    hsl(215, 35%, 10%) 50%, 
+    hsl(220, 40%, 8%) 100%);
   min-height: 100vh;
 }
 
