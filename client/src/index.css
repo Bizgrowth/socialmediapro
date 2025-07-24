@@ -152,13 +152,9 @@
 
 /* Custom textured background with overlay */
 .gradient-bg {
-  background-image: 
+  background: 
     linear-gradient(135deg, rgba(13, 62, 94, 0.85) 0%, rgba(10, 60, 100, 0.9) 100%),
-    url('@assets/image_1753317077102.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+    url('/attached_assets/image_1753317077102.png') center/cover no-repeat fixed;
   background-blend-mode: multiply;
   min-height: 100vh;
 }
