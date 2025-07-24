@@ -4,7 +4,7 @@
 
 :root {
   /* Fresh Gradient Theme - Cyan to Blue */
-  --background: hsl(210, 50%, 50%);
+  --background: hsl(210, 90%, 85%);
   --foreground: hsl(0, 0%, 8%);
   --muted: hsl(210, 60%, 90%);
   --muted-foreground: hsl(210, 30%, 25%);
@@ -57,11 +57,9 @@
     @apply font-sans antialiased text-foreground;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-feature-settings: 'rlig' 1, 'calt' 1;
-    background-image: url('@assets/image_1753318136099.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background: linear-gradient(135deg, 
+      hsl(180, 85%, 55%) 0%, 
+      hsl(210, 90%, 60%) 100%);
     min-height: 100vh;
   }
 
@@ -152,13 +150,16 @@
   animation: fade-in 0.3s ease-out;
 }
 
-/* Custom textured background */
+/* Custom textured background with overlay */
 .gradient-bg {
-  background-image: url('@assets/image_1753318136099.png');
+  background-image: 
+    linear-gradient(135deg, rgba(20, 80, 120, 0.7) 0%, rgba(10, 60, 100, 0.8) 100%),
+    url('@assets/image_1753317077102.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  background-blend-mode: multiply;
   min-height: 100vh;
 }
 
