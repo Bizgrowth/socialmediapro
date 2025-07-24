@@ -4,9 +4,9 @@
 
 :root {
   /* Fresh Gradient Theme - Cyan to Blue */
-  --background: hsl(210, 90%, 85%);
+  --background: hsl(210, 33%, 17%);
   --foreground: hsl(0, 0%, 8%);
-  --muted: hsl(210, 60%, 90%);
+  --muted: hsl(210, 33%, 17%);
   --muted-foreground: hsl(210, 30%, 25%);
   --popover: hsl(0, 0%, 100%);
   --popover-foreground: hsl(210, 40%, 8%);
@@ -150,10 +150,10 @@
   animation: fade-in 0.3s ease-out;
 }
 
-/* Custom textured background with overlay */
+/* Custom textured background with dark overlay */
 .gradient-bg {
   background-image: 
-    linear-gradient(135deg, rgba(20, 80, 120, 0.7) 0%, rgba(10, 60, 100, 0.8) 100%),
+    linear-gradient(135deg, rgba(8, 40, 70, 0.85) 0%, rgba(5, 30, 60, 0.9) 100%),
     url('@assets/image_1753317077102.png');
   background-size: cover;
   background-position: center;
