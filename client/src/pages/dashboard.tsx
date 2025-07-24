@@ -29,7 +29,7 @@ export default function Dashboard() {
     <div className="min-h-screen flex gradient-bg">
       <Sidebar />
       
-      <main className="flex-1 ml-64 p-8">
+      <main className="flex-1 lg:ml-64 p-4 lg:p-8 pt-16 lg:pt-8">
         {/* AI Platform Status Banner */}
         <div className="glass-panel rounded-xl p-6 mb-8">
           <div className="flex items-center space-x-3 mb-2">
@@ -42,17 +42,17 @@ export default function Dashboard() {
         </div>
         
         {/* Header */}
-        <header className="mb-10">
-          <div className="flex justify-between items-start">
+        <header className="mb-6 lg:mb-10">
+          <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start space-y-4 lg:space-y-0">
             <div>
-              <h1 className="text-4xl font-bold text-foreground mb-3 tracking-tight">
+              <h1 className="text-2xl lg:text-4xl font-bold text-foreground mb-2 lg:mb-3 tracking-tight">
                 Social Media Dashboard
               </h1>
-              <p className="text-muted-foreground text-lg">
+              <p className="text-muted-foreground text-base lg:text-lg">
                 Monitor performance, analyze engagement, and accelerate business growth
               </p>
             </div>
-            <div className="flex space-x-4">
+            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
               <button 
                 onClick={handleExportReport}
                 className="btn-secondary"
@@ -85,15 +85,15 @@ export default function Dashboard() {
         </div>
 
         {/* Content Generator CTA Section */}
-        <div className="gradient-primary rounded-xl p-8 mb-8 text-white">
-          <div className="flex flex-col lg:flex-row items-center justify-between">
-            <div className="lg:w-2/3 mb-6 lg:mb-0">
-              <h2 className="text-3xl font-bold mb-4 tracking-tight text-white">AI-Powered Content Generation</h2>
-              <p className="text-white/90 mb-6 text-lg leading-relaxed">
+        <div className="gradient-primary rounded-xl p-4 lg:p-8 mb-6 lg:mb-8 text-white">
+          <div className="flex flex-col lg:flex-row items-center lg:justify-between">
+            <div className="w-full lg:w-2/3 mb-4 lg:mb-0">
+              <h2 className="text-xl lg:text-3xl font-bold mb-3 lg:mb-4 tracking-tight text-white">AI-Powered Content Generation</h2>
+              <p className="text-white/90 mb-4 lg:mb-6 text-base lg:text-lg leading-relaxed">
                 Create engaging, platform-specific content in seconds. Our AI understands your brand voice 
                 and target audience to generate posts that drive measurable results.
               </p>
-              <div className="flex flex-wrap gap-3 mb-6">
+              <div className="flex flex-wrap gap-2 lg:gap-3 mb-4 lg:mb-6">
                 <span className="bg-white/20 px-4 py-2 rounded-full text-sm font-medium text-white">
                   ✨ One-click generation
                 </span>
@@ -105,12 +105,12 @@ export default function Dashboard() {
                 </span>
               </div>
             </div>
-            <div className="lg:w-1/3 text-center">
+            <div className="w-full lg:w-1/3 text-center">
               <button 
                 onClick={() => setContentGeneratorOpen(true)}
-                className="bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-white/90 transition-all duration-200 shadow-xl hover:shadow-2xl hover:scale-105"
+                className="w-full lg:w-auto bg-white text-primary px-6 lg:px-8 py-3 lg:py-4 rounded-lg font-semibold hover:bg-white/90 transition-all duration-200 shadow-xl hover:shadow-2xl hover:scale-105 inline-flex items-center justify-center"
               >
-                <Sparkles className="h-5 w-5 mr-3" />
+                <Sparkles className="h-5 w-5 mr-2 lg:mr-3" />
                 Try Content Generator
               </button>
             </div>

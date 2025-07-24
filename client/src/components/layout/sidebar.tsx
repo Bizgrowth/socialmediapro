@@ -1,16 +1,19 @@
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
+import { useState } from "react";
 import { 
   BarChart3,
   Calendar,
   ChartLine,
   DollarSign,
   Folder,
+  Menu,
   Rocket,
   Search,
   Settings,
-  Sparkles
+  Sparkles,
+  X
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { User } from "@shared/schema";
@@ -28,6 +31,7 @@ const navigation = [
 export default function Sidebar() {
   const [location] = useLocation();
   const { user } = useAuth();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const getUserInitials = (user: User | null | undefined) => {
     if (user?.firstName && user?.lastName) {
@@ -40,7 +44,37 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-64 bg-neutral-800 border-r border-neutral-700 flex flex-col fixed h-full z-10 shadow-lg">
+    <>
+      {/* Mobile Menu Button */}
+      <button
+        onClick={() => setIsMobileMenuOpen(true)}
+        className="fixed top-4 left-4 z-50 lg:hidden bg-neutral-800 text-white p-2 rounded-lg shadow-lg"
+      >
+        <Menu className="h-6 w-6" />
+      </button>
+
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside className={cn(
+        "w-64 bg-neutral-800 border-r border-neutral-700 flex flex-col fixed h-full z-50 shadow-lg transition-transform duration-300",
+        "lg:translate-x-0",
+        isMobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+      )}>
+      {/* Mobile Close Button */}
+      <button
+        onClick={() => setIsMobileMenuOpen(false)}
+        className="absolute top-4 right-4 text-white lg:hidden"
+      >
+        <X className="h-6 w-6" />
+      </button>
+
       {/* Logo */}
       <div className="p-6 border-b border-neutral-700">
         <div className="flex items-center space-x-3">
@@ -63,6 +97,7 @@ export default function Sidebar() {
           return (
             <Link key={item.name} href={item.href}>
               <div
+                onClick={() => setIsMobileMenuOpen(false)}
                 className={cn(
                   "flex items-center space-x-4 px-4 py-3 rounded-xl transition-all duration-200 font-medium group cursor-pointer",
                   isActive
@@ -110,5 +145,6 @@ export default function Sidebar() {
         </div>
       </div>
     </aside>
+    </>
   );
 }

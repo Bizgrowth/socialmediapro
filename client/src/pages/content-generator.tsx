@@ -159,7 +159,7 @@ export default function ContentGenerator() {
     <div className="min-h-screen flex bg-neutral-50">
       <Sidebar />
       
-      <main className="flex-1 ml-64 p-8">
+      <main className="flex-1 lg:ml-64 p-4 lg:p-8 pt-16 lg:pt-8">
         {/* AI Active Banner */}
         <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
           <div className="flex items-center space-x-2">
@@ -171,17 +171,17 @@ export default function ContentGenerator() {
           </p>
         </div>
 
-        <header className="mb-8">
+        <header className="mb-6 lg:mb-8">
           <div className="flex items-center space-x-3 mb-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <Sparkles className="h-5 w-5 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-neutral-900">Content Generator</h1>
+            <h1 className="text-2xl lg:text-3xl font-bold text-neutral-900">Content Generator</h1>
           </div>
-          <p className="text-neutral-600">Create engaging, AI-powered content for your social media platforms</p>
+          <p className="text-neutral-600 text-sm lg:text-base">Create engaging, AI-powered content for your social media platforms</p>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Generation Form */}
           <div className="lg:col-span-1">
             <Card className="sticky top-8">

@@ -207,7 +207,7 @@ export default function RoiTracking() {
     <div className="min-h-screen flex gradient-bg">
       <Sidebar />
       
-      <main className="flex-1 ml-64 p-8">
+      <main className="flex-1 lg:ml-64 p-4 lg:p-8 pt-16 lg:pt-8">
         {/* Analytics Ready Banner */}
         <div className="glass-panel rounded-xl p-6 mb-8">
           <div className="flex items-center space-x-3 mb-2">
@@ -219,8 +219,8 @@ export default function RoiTracking() {
           </p>
         </div>
 
-        <header className="mb-8">
-          <div className="flex justify-between items-start">
+        <header className="mb-6 lg:mb-8">
+          <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start space-y-4 lg:space-y-0">
             <div>
               <div className="flex items-center space-x-3 mb-2">
                 <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">

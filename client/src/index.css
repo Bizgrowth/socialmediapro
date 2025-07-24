@@ -418,3 +418,56 @@
          focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed 
          disabled:opacity-50 transition-all duration-200;
 }
+
+/* Mobile optimizations */
+@media (max-width: 1024px) {
+  .gradient-bg {
+    background-attachment: scroll;
+  }
+  
+  .glass-panel {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  
+  /* Touch targets */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better text sizing on mobile */
+  .card-content {
+    @apply text-sm;
+  }
+}
+
+/* Mobile specific improvements */
+@media (max-width: 768px) {
+  .card {
+    @apply mx-2;
+  }
+  
+  .competitor-card {
+    @apply p-4;
+  }
+  
+  .stats-card {
+    @apply p-3;
+  }
+  
+  /* Improve button sizes on mobile */
+  .btn-primary, .btn-secondary {
+    @apply px-4 py-2 text-sm;
+  }
+  
+  /* Responsive table improvements */
+  .table-responsive {
+    @apply overflow-x-auto;
+  }
+  
+  /* Stack form elements on mobile */
+  .form-grid {
+    @apply grid-cols-1;
+  }
+}

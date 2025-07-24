@@ -280,7 +280,7 @@ export default function CompetitorAnalysis() {
     <div className="min-h-screen flex gradient-bg">
       <Sidebar />
       
-      <main className="flex-1 ml-64 p-8">
+      <main className="flex-1 lg:ml-64 p-4 lg:p-8 pt-16 lg:pt-8">
         {/* Integration Ready Banner */}
         <div className="glass-panel rounded-xl p-6 mb-8">
           <div className="flex items-center space-x-3 mb-2">
@@ -292,20 +292,20 @@ export default function CompetitorAnalysis() {
           </p>
         </div>
 
-        <header className="mb-8">
-          <div className="flex justify-between items-start">
-            <div>
+        <header className="mb-6 lg:mb-8">
+          <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start space-y-4 lg:space-y-0">
+            <div className="flex-1">
               <div className="flex items-center space-x-3 mb-2">
                 <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
                   <Search className="h-5 w-5 text-white" />
                 </div>
-                <h1 className="text-3xl font-bold text-white">Competitor Analysis</h1>
+                <h1 className="text-2xl lg:text-3xl font-bold text-white">Competitor Analysis</h1>
               </div>
-              <p className="text-neutral-300">Track and analyze your competitors' social media performance</p>
+              <p className="text-neutral-300 text-sm lg:text-base">Track and analyze your competitors' social media performance</p>
             </div>
             <Dialog open={addCompetitorOpen} onOpenChange={setAddCompetitorOpen}>
               <DialogTrigger asChild>
-                <Button className="bg-primary hover:bg-primary/90">
+                <Button className="bg-primary hover:bg-primary/90 w-full lg:w-auto">
                   <Plus className="h-4 w-4 mr-2" />
                   Add Competitor
                   </Button>
@@ -378,9 +378,9 @@ export default function CompetitorAnalysis() {
         </header>
 
         {competitors && competitors.length > 0 ? (
-          <div className="space-y-8">
+          <div className="space-y-6 lg:space-y-8">
             {/* Competitor Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
               {competitors.map((competitor) => {
                 // Mock analytics data for display
                 const mockAnalytics = {
