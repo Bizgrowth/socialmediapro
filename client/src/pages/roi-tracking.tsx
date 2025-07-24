@@ -336,62 +336,71 @@ export default function RoiTracking() {
 
         {/* ROI Overview Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="shadow-sm border border-neutral-200">
+          <Card className="card-success">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-md border-2 border-green-200">
                   <DollarSign className="h-5 w-5 text-green-600" />
                 </div>
-                <Badge className={roi >= 0 ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}>
+                <Badge className={roi >= 0 ? "bg-green-600 text-white" : "bg-red-600 text-white shadow-md"}>
                   {roi >= 0 ? "+" : ""}{roi.toFixed(1)}%
                 </Badge>
               </div>
-              <h3 className="text-2xl font-bold text-neutral-900 mb-1">
+              <h3 className="text-2xl font-bold text-foreground mb-1">
                 {formatCurrency(totalRevenue - totalSpend)}
               </h3>
-              <p className="text-sm text-neutral-600">Total ROI</p>
+              <p className="text-sm text-muted-foreground font-medium">Total ROI</p>
             </CardContent>
           </Card>
 
-          <Card className="shadow-sm border border-neutral-200">
+          <Card className="card-primary">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-md border-2 border-blue-200">
                   <BarChart3 className="h-5 w-5 text-blue-600" />
                 </div>
+                <Badge className="bg-blue-600 text-white shadow-md">
+                  Revenue
+                </Badge>
               </div>
-              <h3 className="text-2xl font-bold text-neutral-900 mb-1">
+              <h3 className="text-2xl font-bold text-foreground mb-1">
                 {formatCurrency(totalRevenue)}
               </h3>
-              <p className="text-sm text-neutral-600">Total Revenue</p>
+              <p className="text-sm text-muted-foreground font-medium">Total Revenue</p>
             </CardContent>
           </Card>
 
-          <Card className="shadow-sm border border-neutral-200">
+          <Card className="card-info">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <Users className="h-5 w-5 text-purple-600" />
+                <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-md border-2 border-cyan-200">
+                  <Users className="h-5 w-5 text-cyan-600" />
                 </div>
+                <Badge className="bg-cyan-600 text-white shadow-md">
+                  Leads
+                </Badge>
               </div>
-              <h3 className="text-2xl font-bold text-neutral-900 mb-1">
+              <h3 className="text-2xl font-bold text-foreground mb-1">
                 {totalLeads.toLocaleString()}
               </h3>
-              <p className="text-sm text-neutral-600">Total Leads</p>
+              <p className="text-sm text-muted-foreground font-medium">Total Leads</p>
             </CardContent>
           </Card>
 
-          <Card className="shadow-sm border border-neutral-200">
+          <Card className="card-warning">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-md border-2 border-amber-200">
                   <Target className="h-5 w-5 text-amber-600" />
                 </div>
+                <Badge className="bg-amber-600 text-white shadow-md">
+                  Rate
+                </Badge>
               </div>
-              <h3 className="text-2xl font-bold text-neutral-900 mb-1">
+              <h3 className="text-2xl font-bold text-foreground mb-1">
                 {conversionRate.toFixed(1)}%
               </h3>
-              <p className="text-sm text-neutral-600">Conversion Rate</p>
+              <p className="text-sm text-muted-foreground font-medium">Conversion Rate</p>
             </CardContent>
           </Card>
         </div>
