@@ -128,12 +128,12 @@ export default function CompetitorAnalysis() {
     }
   ];
 
-  const [localCompetitors, setLocalCompetitors] = useState<Competitor[]>(demoCompetitors);
+  const [localCompetitors, setLocalCompetitors] = useState<Competitor[]>([]);
   
   const { data: competitors, isLoading: competitorsLoading } = useQuery<Competitor[]>({
     queryKey: ["/api/competitors"],
     queryFn: async () => {
-      // Simulate API call with local state management
+      // Simulate API call with user-added competitors only
       await new Promise(resolve => setTimeout(resolve, 800));
       return localCompetitors;
     },
@@ -303,47 +303,11 @@ export default function CompetitorAnalysis() {
               </div>
               <p className="text-neutral-300">Track and analyze your competitors' social media performance</p>
             </div>
-            <div className="flex space-x-3">
-              {localCompetitors.length > 0 && (
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button variant="outline" className="text-red-600 border-red-200 hover:bg-red-50">
-                      <Trash2 className="h-4 w-4 mr-2" />
-                      Clear All
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Clear All Competitors</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Are you sure you want to remove all competitors from your tracking list? 
-                        This action cannot be undone.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction 
-                        onClick={() => {
-                          setLocalCompetitors([]);
-                          queryClient.invalidateQueries({ queryKey: ["/api/competitors"] });
-                          toast({
-                            title: "All Competitors Cleared",
-                            description: "Your competitor tracking list has been cleared.",
-                          });
-                        }}
-                        className="bg-red-600 hover:bg-red-700"
-                      >
-                        Clear All
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              )}
-              <Dialog open={addCompetitorOpen} onOpenChange={setAddCompetitorOpen}>
-                <DialogTrigger asChild>
-                  <Button className="bg-primary hover:bg-primary/90">
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Competitor
+            <Dialog open={addCompetitorOpen} onOpenChange={setAddCompetitorOpen}>
+              <DialogTrigger asChild>
+                <Button className="bg-primary hover:bg-primary/90">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Competitor
                   </Button>
                 </DialogTrigger>
                 <DialogContent>
@@ -410,7 +374,6 @@ export default function CompetitorAnalysis() {
                 </form>
               </DialogContent>
             </Dialog>
-            </div>
           </div>
         </header>
 
