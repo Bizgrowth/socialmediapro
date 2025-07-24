@@ -109,12 +109,10 @@ export default function ContentGenerator() {
       });
     },
     onError: (error) => {
-      // Fallback to demo content if AI fails
-      const fallbackContent = generateDemoContent(formData);
-      setGeneratedContent(fallbackContent);
+      console.error("Content generation error:", error);
       toast({
-        title: "AI Generation Failed - Using Demo Content",
-        description: "OpenAI API key may need refresh. Showing sample content instead.",
+        title: "Content Generation Failed",
+        description: "Please check your OpenAI API key and try again.",
         variant: "destructive",
       });
     },
