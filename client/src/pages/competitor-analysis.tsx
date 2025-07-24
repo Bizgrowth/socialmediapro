@@ -128,11 +128,14 @@ export default function CompetitorAnalysis() {
     }
   ];
 
+  const [localCompetitors, setLocalCompetitors] = useState<Competitor[]>(demoCompetitors);
+  
   const { data: competitors, isLoading: competitorsLoading } = useQuery<Competitor[]>({
     queryKey: ["/api/competitors"],
     queryFn: async () => {
+      // Simulate API call with local state management
       await new Promise(resolve => setTimeout(resolve, 800));
-      return demoCompetitors;
+      return localCompetitors;
     },
     retry: false,
   });
@@ -148,7 +151,7 @@ export default function CompetitorAnalysis() {
 
   const addCompetitorMutation = useMutation({
     mutationFn: async (data: typeof newCompetitor) => {
-      // Simulate API delay
+      // Simulate API delay and add to local state
       await new Promise(resolve => setTimeout(resolve, 1500));
       const newComp: Competitor = {
         id: Date.now(),
@@ -158,6 +161,7 @@ export default function CompetitorAnalysis() {
         profileUrl: data.profileUrl,
         isActive: true
       };
+      setLocalCompetitors(prev => [...prev, newComp]);
       return newComp;
     },
     onSuccess: () => {
@@ -170,8 +174,8 @@ export default function CompetitorAnalysis() {
       });
       queryClient.invalidateQueries({ queryKey: ["/api/competitors"] });
       toast({
-        title: "Competitor Added (Demo)",
-        description: "Demo competitor added. Connect social APIs for real tracking.",
+        title: "Competitor Added",
+        description: "New competitor has been added to your tracking list.",
       });
     },
     onError: (error) => {
@@ -185,15 +189,16 @@ export default function CompetitorAnalysis() {
 
   const deleteCompetitorMutation = useMutation({
     mutationFn: async (competitorId: number) => {
-      // Simulate API delay
+      // Simulate API delay and update local state
       await new Promise(resolve => setTimeout(resolve, 1000));
+      setLocalCompetitors(prev => prev.filter(comp => comp.id !== competitorId));
       return competitorId;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/competitors"] });
       toast({
-        title: "Competitor Deleted (Demo)",
-        description: "Competitor removed from tracking list.",
+        title: "Competitor Deleted",
+        description: "Competitor has been removed from your tracking list.",
       });
     },
     onError: (error) => {
@@ -298,14 +303,50 @@ export default function CompetitorAnalysis() {
               </div>
               <p className="text-neutral-300">Track and analyze your competitors' social media performance</p>
             </div>
-            <Dialog open={addCompetitorOpen} onOpenChange={setAddCompetitorOpen}>
-              <DialogTrigger asChild>
-                <Button className="bg-primary hover:bg-primary/90">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Competitor
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
+            <div className="flex space-x-3">
+              {localCompetitors.length > 0 && (
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="outline" className="text-red-600 border-red-200 hover:bg-red-50">
+                      <Trash2 className="h-4 w-4 mr-2" />
+                      Clear All
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Clear All Competitors</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Are you sure you want to remove all competitors from your tracking list? 
+                        This action cannot be undone.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction 
+                        onClick={() => {
+                          setLocalCompetitors([]);
+                          queryClient.invalidateQueries({ queryKey: ["/api/competitors"] });
+                          toast({
+                            title: "All Competitors Cleared",
+                            description: "Your competitor tracking list has been cleared.",
+                          });
+                        }}
+                        className="bg-red-600 hover:bg-red-700"
+                      >
+                        Clear All
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              )}
+              <Dialog open={addCompetitorOpen} onOpenChange={setAddCompetitorOpen}>
+                <DialogTrigger asChild>
+                  <Button className="bg-primary hover:bg-primary/90">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Competitor
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Add New Competitor</DialogTitle>
                 </DialogHeader>
@@ -369,6 +410,7 @@ export default function CompetitorAnalysis() {
                 </form>
               </DialogContent>
             </Dialog>
+            </div>
           </div>
         </header>
 
