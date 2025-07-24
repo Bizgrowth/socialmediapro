@@ -61,10 +61,13 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <Router />
+        <div className="gradient-bg min-h-screen text-white">
+          <Router />
+        </div>
       </TooltipProvider>
     </QueryClientProvider>
   );
 }
+
 
 export default App;
