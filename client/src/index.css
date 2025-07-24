@@ -57,9 +57,11 @@
     @apply font-sans antialiased text-foreground;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-feature-settings: 'rlig' 1, 'calt' 1;
-    background: linear-gradient(135deg, 
-      hsl(180, 85%, 55%) 0%, 
-      hsl(210, 90%, 60%) 100%);
+    background-image: url('@assets/image_1753318136099.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     min-height: 100vh;
   }
 
@@ -150,16 +152,13 @@
   animation: fade-in 0.3s ease-out;
 }
 
-/* Custom textured background with overlay */
+/* Custom textured background */
 .gradient-bg {
-  background-image: 
-    linear-gradient(135deg, rgba(20, 80, 120, 0.7) 0%, rgba(10, 60, 100, 0.8) 100%),
-    url('@assets/image_1753317077102.png');
+  background-image: url('@assets/image_1753318136099.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-blend-mode: multiply;
   min-height: 100vh;
 }
 
