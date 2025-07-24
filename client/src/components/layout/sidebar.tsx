@@ -13,6 +13,7 @@ import {
   Sparkles
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import type { User } from "@shared/schema";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: ChartLine },
@@ -28,7 +29,7 @@ export default function Sidebar() {
   const [location] = useLocation();
   const { user } = useAuth();
 
-  const getUserInitials = (user: any) => {
+  const getUserInitials = (user: User | null | undefined) => {
     if (user?.firstName && user?.lastName) {
       return `${user.firstName[0]}${user.lastName[0]}`.toUpperCase();
     }
@@ -61,9 +62,9 @@ export default function Sidebar() {
           
           return (
             <Link key={item.name} href={item.href}>
-              <a
+              <div
                 className={cn(
-                  "flex items-center space-x-4 px-4 py-3 rounded-xl transition-all duration-200 font-medium group",
+                  "flex items-center space-x-4 px-4 py-3 rounded-xl transition-all duration-200 font-medium group cursor-pointer",
                   isActive
                     ? "bg-primary text-primary-foreground shadow-lg"
                     : "text-muted-foreground hover:text-foreground hover:bg-accent"
@@ -77,7 +78,7 @@ export default function Sidebar() {
                 {isActive && (
                   <div className="w-2 h-2 bg-primary-foreground rounded-full ml-auto"></div>
                 )}
-              </a>
+              </div>
             </Link>
           );
         })}
@@ -102,9 +103,9 @@ export default function Sidebar() {
             <p className="text-xs text-primary font-medium">Professional Plan</p>
           </div>
           <Link href="/settings">
-            <a className="text-muted-foreground hover:text-foreground p-2 rounded-lg hover:bg-accent transition-colors">
+            <div className="text-muted-foreground hover:text-foreground p-2 rounded-lg hover:bg-accent transition-colors cursor-pointer">
               <Settings className="h-5 w-5" />
-            </a>
+            </div>
           </Link>
         </div>
       </div>
