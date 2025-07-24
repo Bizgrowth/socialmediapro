@@ -294,9 +294,9 @@ export default function CompetitorAnalysis() {
                 <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
                   <Search className="h-5 w-5 text-white" />
                 </div>
-                <h1 className="text-3xl font-bold text-neutral-900">Competitor Analysis</h1>
+                <h1 className="text-3xl font-bold text-white">Competitor Analysis</h1>
               </div>
-              <p className="text-neutral-600">Track and analyze your competitors' social media performance</p>
+              <p className="text-neutral-300">Track and analyze your competitors' social media performance</p>
             </div>
             <Dialog open={addCompetitorOpen} onOpenChange={setAddCompetitorOpen}>
               <DialogTrigger asChild>
