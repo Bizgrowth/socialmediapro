@@ -40,15 +40,15 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-64 bg-card border-r border-border flex flex-col fixed h-full z-10 shadow-lg">
+    <aside className="w-64 bg-neutral-800 border-r border-neutral-700 flex flex-col fixed h-full z-10 shadow-lg">
       {/* Logo */}
-      <div className="p-6 border-b border-border">
+      <div className="p-6 border-b border-neutral-700">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center shadow-lg">
             <Rocket className="h-6 w-6 text-white" />
           </div>
           <div>
-            <span className="text-xl font-bold text-foreground tracking-tight">SocialBoost</span>
+            <span className="text-xl font-bold text-white tracking-tight">SocialBoost</span>
             <div className="text-xs text-accent-foreground font-semibold bg-accent px-2 py-0.5 rounded-md">PRO</div>
           </div>
         </div>
@@ -67,7 +67,7 @@ export default function Sidebar() {
                   "flex items-center space-x-4 px-4 py-3 rounded-xl transition-all duration-200 font-medium group cursor-pointer",
                   isActive
                     ? "bg-primary text-primary-foreground shadow-lg"
-                    : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                    : "text-neutral-300 hover:text-white hover:bg-accent"
                 )}
               >
                 <Icon className={cn(
@@ -85,7 +85,7 @@ export default function Sidebar() {
       </nav>
 
       {/* User Profile */}
-      <div className="p-6 border-t border-border">
+      <div className="p-6 border-t border-neutral-700">
         <div className="flex items-center space-x-3 px-4 py-3 rounded-xl glass-panel">
           <Avatar className="h-12 w-12 ring-2 ring-primary/20">
             <AvatarImage src={user?.profileImageUrl || ""} alt="Profile" />
@@ -94,7 +94,7 @@ export default function Sidebar() {
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-foreground truncate">
+            <p className="text-sm font-semibold text-white truncate">
               {user?.firstName && user?.lastName 
                 ? `${user.firstName} ${user.lastName}`
                 : user?.email || "User"
@@ -103,7 +103,7 @@ export default function Sidebar() {
             <p className="text-xs text-primary font-medium">Professional Plan</p>
           </div>
           <Link href="/settings">
-            <div className="text-muted-foreground hover:text-foreground p-2 rounded-lg hover:bg-accent transition-colors cursor-pointer">
+            <div className="text-neutral-400 hover:text-white p-2 rounded-lg hover:bg-accent transition-colors cursor-pointer">
               <Settings className="h-5 w-5" />
             </div>
           </Link>
