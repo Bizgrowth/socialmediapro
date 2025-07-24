@@ -7,7 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
@@ -23,7 +25,10 @@ import {
   MessageCircle,
   Share2,
   Lightbulb,
-  MoreVertical
+  MoreVertical,
+  Trash2,
+  Edit3,
+  ExternalLink
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { SiInstagram, SiFacebook, SiX, SiLinkedin } from "react-icons/si";
@@ -51,6 +56,8 @@ interface CompetitorAnalytics {
 
 export default function CompetitorAnalysis() {
   const [addCompetitorOpen, setAddCompetitorOpen] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [selectedCompetitor, setSelectedCompetitor] = useState<Competitor | null>(null);
   const [newCompetitor, setNewCompetitor] = useState({
     name: "",
     platform: "instagram",
@@ -161,6 +168,7 @@ export default function CompetitorAnalysis() {
         accountHandle: "",
         profileUrl: "",
       });
+      queryClient.invalidateQueries({ queryKey: ["/api/competitors"] });
       toast({
         title: "Competitor Added (Demo)",
         description: "Demo competitor added. Connect social APIs for real tracking.",
@@ -170,6 +178,28 @@ export default function CompetitorAnalysis() {
       toast({
         title: "Error",
         description: "Failed to add competitor. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const deleteCompetitorMutation = useMutation({
+    mutationFn: async (competitorId: number) => {
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      return competitorId;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/competitors"] });
+      toast({
+        title: "Competitor Deleted (Demo)",
+        description: "Competitor removed from tracking list.",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to delete competitor. Please try again.",
         variant: "destructive",
       });
     },
@@ -211,6 +241,15 @@ export default function CompetitorAnalysis() {
       return;
     }
     addCompetitorMutation.mutate(newCompetitor);
+  };
+
+  const handleViewDetails = (competitor: Competitor) => {
+    setSelectedCompetitor(competitor);
+    setDetailsOpen(true);
+  };
+
+  const handleDeleteCompetitor = (competitorId: number) => {
+    deleteCompetitorMutation.mutate(competitorId);
   };
 
   if (competitorsLoading) {
@@ -366,9 +405,57 @@ export default function CompetitorAnalysis() {
                             </div>
                           </div>
                         </div>
-                        <Button variant="ghost" size="sm">
-                          <MoreVertical className="h-4 w-4" />
-                        </Button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="sm">
+                              <MoreVertical className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem onClick={() => handleViewDetails(competitor)}>
+                              <Eye className="h-4 w-4 mr-2" />
+                              View Details
+                            </DropdownMenuItem>
+                            {competitor.profileUrl && (
+                              <DropdownMenuItem 
+                                onClick={() => window.open(competitor.profileUrl, '_blank')}
+                              >
+                                <ExternalLink className="h-4 w-4 mr-2" />
+                                Visit Profile
+                              </DropdownMenuItem>
+                            )}
+                            <DropdownMenuSeparator />
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <DropdownMenuItem 
+                                  onSelect={(e) => e.preventDefault()}
+                                  className="text-red-600 focus:text-red-600"
+                                >
+                                  <Trash2 className="h-4 w-4 mr-2" />
+                                  Delete
+                                </DropdownMenuItem>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>Delete Competitor</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    Are you sure you want to remove "{competitor.name}" from your competitor tracking? 
+                                    This action cannot be undone.
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                  <AlertDialogAction 
+                                    onClick={() => handleDeleteCompetitor(competitor.id)}
+                                    className="bg-red-600 hover:bg-red-700"
+                                  >
+                                    Delete
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
                     </CardHeader>
                     <CardContent>
@@ -412,7 +499,12 @@ export default function CompetitorAnalysis() {
                           </div>
                         </div>
                         
-                        <Button variant="outline" className="w-full" size="sm">
+                        <Button 
+                          variant="outline" 
+                          className="w-full" 
+                          size="sm"
+                          onClick={() => handleViewDetails(competitor)}
+                        >
                           <Eye className="h-4 w-4 mr-2" />
                           View Details
                         </Button>
@@ -477,6 +569,166 @@ export default function CompetitorAnalysis() {
             </CardContent>
           </Card>
         )}
+
+        {/* Competitor Details Dialog */}
+        <Dialog open={detailsOpen} onOpenChange={setDetailsOpen}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="flex items-center space-x-3">
+                {selectedCompetitor && (
+                  <>
+                    <Avatar>
+                      <AvatarImage src={selectedCompetitor.logoUrl} alt={selectedCompetitor.name} />
+                      <AvatarFallback className="bg-neutral-200 text-neutral-700">
+                        {selectedCompetitor.name.substring(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <span>{selectedCompetitor.name}</span>
+                      <div className="flex items-center space-x-1 text-sm text-neutral-500">
+                        {getPlatformIcon(selectedCompetitor.platform)}
+                        <span>{selectedCompetitor.accountHandle}</span>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </DialogTitle>
+              <DialogDescription>
+                Detailed analytics and performance metrics for this competitor
+              </DialogDescription>
+            </DialogHeader>
+            
+            {selectedCompetitor && (
+              <div className="space-y-6">
+                {/* Performance Overview */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <Card className="p-4">
+                    <div className="text-center">
+                      <Users className="h-6 w-6 text-neutral-500 mx-auto mb-2" />
+                      <p className="text-2xl font-bold">
+                        {formatNumber(Math.floor(Math.random() * 100000) + 10000)}
+                      </p>
+                      <p className="text-sm text-neutral-500">Followers</p>
+                    </div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-center">
+                      <Heart className="h-6 w-6 text-neutral-500 mx-auto mb-2" />
+                      <p className="text-2xl font-bold">
+                        {+(Math.random() * 5 + 1).toFixed(1)}%
+                      </p>
+                      <p className="text-sm text-neutral-500">Engagement</p>
+                    </div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-center">
+                      <MessageCircle className="h-6 w-6 text-neutral-500 mx-auto mb-2" />
+                      <p className="text-2xl font-bold">
+                        {Math.floor(Math.random() * 1000) + 100}
+                      </p>
+                      <p className="text-sm text-neutral-500">Posts</p>
+                    </div>
+                  </Card>
+                  <Card className="p-4">
+                    <div className="text-center">
+                      <TrendingUp className="h-6 w-6 text-green-600 mx-auto mb-2" />
+                      <p className="text-2xl font-bold text-green-600">
+                        +{+(Math.random() * 15 + 2).toFixed(1)}%
+                      </p>
+                      <p className="text-sm text-neutral-500">Growth</p>
+                    </div>
+                  </Card>
+                </div>
+
+                {/* Recent Posts Analysis */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg">Recent Post Performance</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {[...Array(3)].map((_, i) => (
+                        <div key={i} className="flex items-center space-x-4 p-3 bg-neutral-50 rounded-lg">
+                          <div className="w-12 h-12 bg-neutral-200 rounded-lg flex items-center justify-center">
+                            <MessageCircle className="h-6 w-6 text-neutral-500" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="font-medium text-sm text-neutral-900">
+                              Post from {new Date(Date.now() - (i + 1) * 24 * 60 * 60 * 1000).toLocaleDateString()}
+                            </p>
+                            <div className="flex items-center space-x-4 text-sm text-neutral-500 mt-1">
+                              <span className="flex items-center space-x-1">
+                                <Heart className="h-3 w-3" />
+                                <span>{Math.floor(Math.random() * 500) + 50}</span>
+                              </span>
+                              <span className="flex items-center space-x-1">
+                                <MessageCircle className="h-3 w-3" />
+                                <span>{Math.floor(Math.random() * 50) + 5}</span>
+                              </span>
+                              <span className="flex items-center space-x-1">
+                                <Share2 className="h-3 w-3" />
+                                <span>{Math.floor(Math.random() * 20) + 2}</span>
+                              </span>
+                            </div>
+                          </div>
+                          <Badge variant="secondary">
+                            {+(Math.random() * 5 + 1).toFixed(1)}% ER
+                          </Badge>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Best Performing Content */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg">Content Insights</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-neutral-600">Best performing content type:</span>
+                        <Badge>Video Posts</Badge>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-neutral-600">Optimal posting time:</span>
+                        <Badge variant="secondary">2:00 PM - 4:00 PM</Badge>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-neutral-600">Average post frequency:</span>
+                        <Badge variant="outline">5 posts/week</Badge>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-neutral-600">Top hashtags:</span>
+                        <div className="flex space-x-1">
+                          <Badge variant="outline">#business</Badge>
+                          <Badge variant="outline">#marketing</Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Action Buttons */}
+                <div className="flex justify-end space-x-3">
+                  {selectedCompetitor.profileUrl && (
+                    <Button 
+                      variant="outline" 
+                      onClick={() => window.open(selectedCompetitor.profileUrl, '_blank')}
+                    >
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      Visit Profile
+                    </Button>
+                  )}
+                  <Button onClick={() => setDetailsOpen(false)}>
+                    Close
+                  </Button>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </main>
     </div>
   );
