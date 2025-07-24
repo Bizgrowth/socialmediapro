@@ -282,7 +282,7 @@ export default function CompetitorAnalysis() {
             <div className="status-dot status-warning"></div>
             <h3 className="text-foreground font-semibold text-lg">Ready for Social Integration</h3>
           </div>
-          <p className="text-muted-foreground">
+          <p className="text-neutral-300">
             Connect social media APIs to enable real-time competitor tracking and analytics.
           </p>
         </div>

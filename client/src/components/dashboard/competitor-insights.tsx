@@ -67,8 +67,8 @@ export default function CompetitorInsights() {
           <CardTitle className="text-lg font-semibold text-foreground">
             Competitor Insights
           </CardTitle>
-          <Link href="/competitor-analysis">
-            <a className="text-primary text-sm hover:underline">Full analysis</a>
+          <Link href="/competitor-analysis" className="text-primary text-sm hover:underline">
+            Full analysis
           </Link>
         </div>
       </CardHeader>
