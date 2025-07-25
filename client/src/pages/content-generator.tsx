@@ -78,22 +78,22 @@ export default function ContentGenerator() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  // Demo mode - generate sample content
-  const generateDemoContent = (data: typeof formData): GeneratedContent[] => {
-    const sampleContent = data.platforms.map((platform, index) => ({
-      id: Date.now() + index,
-      title: `${data.contentType} for ${platform}`,
-      body: `🚀 Transform your business with our innovative solutions! \n\nAt ${data.businessDescription || 'our company'}, we're passionate about delivering exceptional results that drive real growth. \n\n${data.topic ? `Learn more about ${data.topic} and how it can benefit your business.` : 'Discover how we can help you achieve your goals.'}\n\n#Innovation #Growth #Success`,
-      platform,
-      hashtags: ["Innovation", "Growth", "Success", "Business", "Transform"],
-      mentions: [],
-      sentiment: {
-        rating: 4.2,
-        confidence: 0.85,
-        insights: "Positive and engaging tone with strong call-to-action elements"
-      }
-    }));
-    return sampleContent;
+  // Real AI content generation using OpenAI API
+  const generateRealContent = async (data: typeof formData): Promise<GeneratedContent[]> => {
+    const response = await apiRequest("POST", "/api/content/generate", {
+      contentType: data.contentType,
+      platforms: data.platforms,
+      businessDescription: data.businessDescription,
+      tone: data.tone,
+      topic: data.topic
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to generate content');
+    }
+    
+    const result = await response.json();
+    return result.content;
   };
 
   const generateMutation = useMutation({

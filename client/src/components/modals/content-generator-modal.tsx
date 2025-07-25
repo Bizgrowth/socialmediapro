@@ -96,36 +96,30 @@ export default function ContentGeneratorModal({ open, onOpenChange }: ContentGen
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  // Demo mode - generate sample content
-  const generateDemoContent = (data: typeof formData): GeneratedContent[] => {
-    const sampleContent = data.platforms.map((platform, index) => ({
-      id: Date.now() + index,
-      title: `${data.contentType} for ${platform}`,
-      body: `🚀 Transform your business with our innovative solutions! \n\nAt ${data.businessDescription || 'our company'}, we're passionate about delivering exceptional results that drive real growth. \n\n${data.topic ? `Learn more about ${data.topic} and how it can benefit your business.` : 'Discover how we can help you achieve your goals.'}\n\n#Innovation #Growth #Success`,
-      platform,
-      hashtags: ["Innovation", "Growth", "Success", "Business", "Transform"],
-      mentions: [],
-      sentiment: {
-        rating: 4.2,
-        confidence: 0.85,
-        insights: "Positive and engaging tone with strong call-to-action elements"
-      }
-    }));
-    return sampleContent;
-  };
+  
 
   const generateMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      return { content: generateDemoContent(data) };
+      const response = await apiRequest("POST", "/api/content/generate", {
+        contentType: data.contentType,
+        platforms: data.platforms,
+        businessDescription: data.businessDescription,
+        tone: data.tone,
+        topic: data.topic
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to generate content');
+      }
+      
+      return response.json();
     },
     onSuccess: (data) => {
       setGeneratedContent(data.content);
       setCurrentStep("results");
       toast({
-        title: "Content Generated! (Demo)",
-        description: `Generated ${data.content.length} demo posts. Connect OpenAI for real AI content.`,
+        title: "Content Generated Successfully!",
+        description: `Generated ${data.content.length} AI-powered posts optimized for your platforms.`,
       });
     },
     onError: (error) => {
