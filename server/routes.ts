@@ -156,6 +156,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Schedule new content API
+  const scheduleContentSchema = z.object({
+    title: z.string(),
+    body: z.string(),
+    platforms: z.array(z.string()),
+    scheduledFor: z.string(),
+    contentType: z.string().optional(),
+    tone: z.string().optional(),
+    metadata: z.object({
+      hashtags: z.array(z.string()),
+      mentions: z.array(z.string()),
+      sentiment: z.object({
+        rating: z.number(),
+        confidence: z.number(),
+        insights: z.string(),
+      }).optional(),
+    }).optional(),
+  });
+  
+  app.post('/api/posts/schedule', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const validatedData = scheduleContentSchema.parse(req.body);
+      
+      const scheduledPost = await storage.scheduleContent(
+        userId,
+        validatedData,
+        new Date(validatedData.scheduledFor)
+      );
+      
+      res.json(scheduledPost);
+    } catch (error) {
+      console.error("Error scheduling content:", error);
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Invalid request data", errors: error.errors });
+      } else {
+        res.status(500).json({ message: "Failed to schedule content" });
+      }
+    }
+  });
+
   app.post('/api/content/:id/schedule', isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
@@ -163,16 +204,60 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { scheduledFor, platforms } = req.body;
 
       // Verify content ownership
-      const content = await storage.getContentById(contentId);
-      if (!content || content.userId !== userId) {
+      const existingContent = await storage.getContentById(contentId);
+      if (!existingContent || existingContent.userId !== userId) {
         return res.status(404).json({ message: "Content not found" });
       }
 
-      await scheduleContent(contentId, new Date(scheduledFor), platforms);
-      res.json({ message: "Content scheduled successfully" });
+      const updatedContent = await storage.updateScheduledPost(contentId, {
+        status: "scheduled",
+        scheduledFor: new Date(scheduledFor),
+        platforms: platforms || existingContent.platforms,
+      });
+      
+      res.json(updatedContent);
     } catch (error) {
       console.error("Error scheduling content:", error);
       res.status(500).json({ message: "Failed to schedule content" });
+    }
+  });
+
+  app.put('/api/posts/scheduled/:id', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const contentId = parseInt(req.params.id);
+      const updates = req.body;
+
+      // Verify content ownership
+      const existingContent = await storage.getContentById(contentId);
+      if (!existingContent || existingContent.userId !== userId) {
+        return res.status(404).json({ message: "Scheduled post not found" });
+      }
+
+      const updatedContent = await storage.updateScheduledPost(contentId, updates);
+      res.json(updatedContent);
+    } catch (error) {
+      console.error("Error updating scheduled post:", error);
+      res.status(500).json({ message: "Failed to update scheduled post" });
+    }
+  });
+
+  app.delete('/api/posts/scheduled/:id', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const contentId = parseInt(req.params.id);
+
+      // Verify content ownership
+      const existingContent = await storage.getContentById(contentId);
+      if (!existingContent || existingContent.userId !== userId) {
+        return res.status(404).json({ message: "Scheduled post not found" });
+      }
+
+      await storage.deleteScheduledPost(contentId);
+      res.json({ message: "Scheduled post deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting scheduled post:", error);
+      res.status(500).json({ message: "Failed to delete scheduled post" });
     }
   });
 

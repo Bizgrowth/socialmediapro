@@ -190,23 +190,24 @@ export class DatabaseStorage implements IStorage {
       .limit(limit);
   }
 
-  async getScheduledPosts(userId: string): Promise<Post[]> {
+  async getScheduledPosts(userId: string): Promise<any[]> {
     const result = await db
       .select({
-        id: posts.id,
-        status: posts.status,
-        createdAt: posts.createdAt,
-        userId: posts.userId,
-        publishedAt: posts.publishedAt,
-        contentId: posts.contentId,
-        platform: posts.platform,
-        platformPostId: posts.platformPostId,
+        id: content.id,
+        title: content.title,
+        body: content.body,
+        scheduledFor: content.scheduledFor,
+        platforms: content.platforms,
+        status: content.status,
+        contentType: content.contentType,
+        tone: content.tone,
+        metadata: content.metadata,
+        createdAt: content.createdAt,
       })
-      .from(posts)
-      .innerJoin(content, eq(posts.contentId, content.id))
+      .from(content)
       .where(
         and(
-          eq(posts.userId, userId),
+          eq(content.userId, userId),
           eq(content.status, "scheduled"),
           gte(content.scheduledFor, new Date())
         )
@@ -214,6 +215,41 @@ export class DatabaseStorage implements IStorage {
       .orderBy(content.scheduledFor);
     return result;
   }
+
+  async scheduleContent(userId: string, contentData: any, scheduledFor: Date): Promise<any> {
+    const [scheduled] = await db
+      .insert(content)
+      .values({
+        userId,
+        title: contentData.title,
+        body: contentData.body,
+        contentType: contentData.contentType || "Social Media Post",
+        platforms: contentData.platforms,
+        tone: contentData.tone || "Professional",
+        status: "scheduled",
+        scheduledFor,
+        metadata: contentData.metadata || null,
+      })
+      .returning();
+    return scheduled;
+  }
+
+  async updateScheduledPost(contentId: number, updates: any): Promise<any> {
+    const [updated] = await db
+      .update(content)
+      .set(updates)
+      .where(eq(content.id, contentId))
+      .returning();
+    return updated;
+  }
+
+  async deleteScheduledPost(contentId: number): Promise<void> {
+    await db
+      .delete(content)
+      .where(eq(content.id, contentId));
+  }
+
+
 
   async updatePost(id: number, updates: Partial<InsertPost>): Promise<Post | undefined> {
     const [updated] = await db
@@ -234,22 +270,25 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getAnalyticsByUserId(userId: string, startDate?: Date, endDate?: Date): Promise<Analytics[]> {
-    let query = db
-      .select()
-      .from(analytics)
-      .where(eq(analytics.userId, userId));
-
     if (startDate && endDate) {
-      query = query.where(
-        and(
-          eq(analytics.userId, userId),
-          gte(analytics.date, startDate),
-          lte(analytics.date, endDate)
+      return await db
+        .select()
+        .from(analytics)
+        .where(
+          and(
+            eq(analytics.userId, userId),
+            gte(analytics.date, startDate),
+            lte(analytics.date, endDate)
+          )
         )
-      );
+        .orderBy(desc(analytics.date));
     }
 
-    return await query.orderBy(desc(analytics.date));
+    return await db
+      .select()
+      .from(analytics)
+      .where(eq(analytics.userId, userId))
+      .orderBy(desc(analytics.date));
   }
 
   async getAnalyticsByPostId(postId: number): Promise<Analytics[]> {
@@ -340,22 +379,25 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getRoiDataByUserId(userId: string, startDate?: Date, endDate?: Date): Promise<RoiData[]> {
-    let query = db
-      .select()
-      .from(roiData)
-      .where(eq(roiData.userId, userId));
-
     if (startDate && endDate) {
-      query = query.where(
-        and(
-          eq(roiData.userId, userId),
-          gte(roiData.date, startDate),
-          lte(roiData.date, endDate)
+      return await db
+        .select()
+        .from(roiData)
+        .where(
+          and(
+            eq(roiData.userId, userId),
+            gte(roiData.date, startDate),
+            lte(roiData.date, endDate)
+          )
         )
-      );
+        .orderBy(desc(roiData.date));
     }
 
-    return await query.orderBy(desc(roiData.date));
+    return await db
+      .select()
+      .from(roiData)
+      .where(eq(roiData.userId, userId))
+      .orderBy(desc(roiData.date));
   }
 
   // Dashboard aggregations

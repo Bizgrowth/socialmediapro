@@ -23,6 +23,7 @@ import {
   TrendingUp
 } from "lucide-react";
 import { SiInstagram, SiFacebook, SiX, SiLinkedin } from "react-icons/si";
+import SchedulePostModal from "@/components/modals/schedule-post-modal";
 
 interface GeneratedContent {
   id: number;
@@ -75,6 +76,8 @@ export default function ContentGenerator() {
     topic: "",
   });
   const [generatedContent, setGeneratedContent] = useState<GeneratedContent[]>([]);
+  const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
+  const [selectedContentForScheduling, setSelectedContentForScheduling] = useState<GeneratedContent | null>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -146,6 +149,11 @@ export default function ContentGenerator() {
       title: "Copied!",
       description: "Content copied to clipboard.",
     });
+  };
+
+  const handleSchedulePost = (content: GeneratedContent) => {
+    setSelectedContentForScheduling(content);
+    setScheduleModalOpen(true);
   };
 
   const getPlatformIcon = (platformId: string) => {
@@ -344,7 +352,11 @@ export default function ContentGenerator() {
                                   <Copy className="h-4 w-4 mr-2" />
                                   Copy
                                 </Button>
-                                <Button size="sm" variant="outline">
+                                <Button 
+                                  size="sm" 
+                                  variant="outline"
+                                  onClick={() => handleSchedulePost(content)}
+                                >
                                   <Calendar className="h-4 w-4 mr-2" />
                                   Schedule
                                 </Button>
@@ -415,6 +427,25 @@ export default function ContentGenerator() {
           </div>
         </div>
       </main>
+
+      {/* Schedule Post Modal */}
+      <SchedulePostModal
+        isOpen={scheduleModalOpen}
+        onClose={() => {
+          setScheduleModalOpen(false);
+          setSelectedContentForScheduling(null);
+        }}
+        initialContent={selectedContentForScheduling ? {
+          title: selectedContentForScheduling.title,
+          body: selectedContentForScheduling.body,
+          platforms: [selectedContentForScheduling.platform],
+          metadata: {
+            hashtags: selectedContentForScheduling.hashtags,
+            mentions: selectedContentForScheduling.mentions,
+            sentiment: selectedContentForScheduling.sentiment,
+          },
+        } : undefined}
+      />
     </div>
   );
 }
